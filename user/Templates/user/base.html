@@ -1,0 +1,73 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>VEGGIE LIFE</title>
+    
+        <!-- Bootstrap icons-->
+        <link rel="stylesheet" href="{% static 'user/css/styles.css' %}">
+          <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'user/css/styles.css'%}" rel="stylesheet" />
+
+    </head>
+    <header>
+        <!-- Navigation-->
+        <nav class="navbar navbar-light static-top" >
+            <div class="container">
+                <ul id="nav1" class="nav justify-content-end ">
+                <li class="nav-item"><a class="navbar-brand" href="#!">VEGGIE LIFE</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">| VEGGIE RESTAURANTS</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">| REVIWES</a></li>
+                </ul>
+                <ul id="nav2" class="nav justify-content-end ">
+                    <li class="nav-item"><a class="nav-link" href="#!">SIGN UP</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#!">LOGIN</a></li>
+              
+            </div>
+        </nav>
+
+    </header>
+        <!-- Masthead-->
+                <body>
+                {% block content %}
+                    
+                
+
+
+
+                   
+
+
+     
+        {% endblock %}
+                </body> 
+       {%block  footer%}
+<!-- Footer-->
+<footer class="footer  fixed-bottom">
+    <div class="container">
+        <hr>
+        <div class="row">
+            <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
+              
+                <p class="text-muted small mb-4 mb-lg-0">     &copy; Your Website 2021. All Rights Reserved.</p>
+            </div>
+            
+        </div>
+    </div>
+</footer>
+{% endblock %}
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="{% static '/user/js/scripts.js'%}"></script>
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>
+</html>
