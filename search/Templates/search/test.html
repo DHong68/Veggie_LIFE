@@ -1,0 +1,37 @@
+
+
+</body>
+
+ 
+
+
+
+<!-- 1.row 2. if~ 3.modal...-->
+     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+     <script>
+     const data =
+         axios({
+     url: 'http://openapi.foodsafetykorea.go.kr/api/a93411c41a8541e19060/C002/json/1/10/PRDLST_NM=라면',
+     method: 'get',
+    
+    });
+     data.then(function (result) {
+     console.log(result.data);
+
+        let html='';
+         let length=result.data['C002']['row'].length;
+        console.log(length);
+        for(let i=0;i<length;i++){
+    
+         let product= data['C002']['row'][i]['PRDLST_NM'];
+         let Brand= data['C002']['row'][i]['BSSH_NM'];
+
+            html+=`<tr><td>${product}<td></tr>`
+            html+=`<tr><td>${Brand}<td></tr>`
+       
+           
+        }
+        document.body.innerHTML+= html;
+     });
+
+     </script>
