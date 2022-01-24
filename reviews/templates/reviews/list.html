@@ -1,0 +1,27 @@
+{% extends 'user/base.html' %}
+{% block content %}
+
+<div class="jumbotron">
+  <div class="container text-center">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>음식점 이름</th><th>제목</th><th>작성자</th><th>작성일자</th>
+        </tr>
+      </thead>
+      <body>
+        <hr>
+        {% for item in data %}
+          <tr>
+            <td>{{ item.store_name }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.member_id }}</td>
+            <td>{{ item.date }}</td>
+          </tr>
+        {% endfor %}
+      </body>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
