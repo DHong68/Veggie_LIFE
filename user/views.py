@@ -29,6 +29,8 @@ def login(request):
           user_id = request.POST.get('user_id')
           password = request.POST.get('password')
           context = {}
+          print(user_id)
+          print(password)
           try:
                user = User.objects.get(user_id = user_id)
                if password != user.password:
