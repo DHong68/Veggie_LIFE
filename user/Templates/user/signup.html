@@ -4,7 +4,9 @@
 
 <form action="{% url 'user:signup' %}" method="post">
     {% csrf_token %}
-    {% if form.errors %}
+    <body>
+    <table>
+        {% if form.errors %}
         <div class="alert alert-danger" role="alert">
         {% for field in form %}
             {% if field.errors %}
@@ -14,11 +16,6 @@
         {% endfor %}
         </div>
     {% endif %}
-    <body>
-    {{ error }}
-    <form action="/user/signup/" method="post">
-    <input type="hidden" name="csrfmiddlewaretoken" value="OSMBLWn2zhyAC4psUeESDrkYd8T7W55Qdccknk8vyXCBy08mu87eUCMyA6Oo3Nhn">
-    <table>
     <tr>
         <th>
             <label for="id_user_id">아이디:</label>
@@ -40,7 +37,8 @@
             <label for="id_re_password">비밀번호 확인:</label>
         </th>
         <td>
-            <input type="password" name="re_password" required size="50" maxlength="50" id="id_re_password">
+            <input type="password" name="re_password" required size="50" maxlength="50" id="id_re_password"><br>
+            {{ error }}
         </td>
     </tr>
     <tr>
@@ -71,20 +69,6 @@
     <input type="submit" value="가입">
     </form>
 
-    <script>
-        document.querySelector("#submit").addEventListener("click", (e) => {
-            e.preventDefault();
-    
-            const password = document.querySelector("[name=password]").value;
-            const re_password = document.querySelector("[name=re_password]").value;
-                
-            if(password == re_password) {
-                console.log('ok');
-            }
-        });
-      </script>
-    
-    
     </body> 
            
 {% endblock %}
