@@ -1,0 +1,6 @@
+{% extends "user/base.html"%}
+{% block content %}
+<body>
+    <button action="{% url 'user:delete' %}" type="button" id="del_btn">회원 탈퇴하기</button>
+</body>
+{% endblock %}

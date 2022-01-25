@@ -1,5 +1,6 @@
 {% extends "user/base.html"%}
-{% block content %}
+{%load static%}
+{% comment %} {% block content %}
 <form method="post" action="{% url 'user:login' %}" style="margin: auto; width: 220px;">
     {% csrf_token %}
     {{ error }} <br>
@@ -7,6 +8,19 @@
     비밀번호 : <input type="password" name="password"><br>
     <input type="submit" value="로그인" style="margin: auto; width: 180px;">
 </form>
-
-
+{% endblock %} {% endcomment %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'user/css/login_styles.css' %}">
+<body>
+<div class="login-page">
+    <div class="form" style="position : absolute; top:50%;left:50%;margin:-50px 0 0 -50px;">
+      <form class="login-form" action="{% url 'user:login' %}" method="post" >
+        <input type="text" placeholder="username" style="width:300px;height:40px;font-size:30px;"/><br>
+        <input type="password" placeholder="password" style="width:300px;height:40px;font-size:30px;"/><br>
+        <button style="width:300px;height:40px;font-size:30px; text">login</button>
+        <p class="message">Not registered? <a href="#">Create an account</a></p>
+      </form>
+    </div>
+</div>
+</body>
 {% endblock %}
