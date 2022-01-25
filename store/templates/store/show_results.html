@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<link rel="stylesheet"
+href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<body style='margin:30px;'>
+    <table class='table table-striped'>
+        <colgroup>
+            <col style="width:20%">
+            <col style="width:5%">
+            <col style="width:10%">
+            <col style="width:25%">
+            <col style="width:40%">
+        </colgroup>
+
+        <tr>
+            <td>식당명</td>
+            <td>업종</td>
+            <td>전화번호</td>
+            <td>주소</td>
+            <td>메뉴</td>
+        </tr>
+        
+        {% for s in stores %}
+        <tr>
+            <td>{{ s.name }}</td>
+            <td>{{ s.type }}</td>
+            <td>{{ s.phone }}</td>
+            <td>{{ s.address }}</td>
+            <td>{{ s.menu }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div style='text-align:center;'>
+        <ul class='pagination'>
+
+        {% if is_prev %}
+            <li>
+                <a href="{% url 'store:show' %}?page={{ start_page | add:'-10' }}">[PREV]</a>
+            </li>
+        {% endif %}
+
+        {% for i in page_range %}
+        <li>
+            <a href='{% url "store:show" %}?page={{ i }}'>{{ i }}</a>
+        </li>
+        {% endfor %}
+
+        {% if is_next %}
+            <li>
+                <a href="{% url 'store:show' %}?page={{ start_page | add:'10' }}">[NEXT]</a>
+            </li>
+        {% endif %}
+
+        </ul>
+    </div>
+</body>
+    
