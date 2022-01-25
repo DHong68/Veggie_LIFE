@@ -1,7 +1,6 @@
 from django import forms
 from .models import User
 from django.contrib.auth.models import User as Users
-from argon2 import PasswordHasher
 
 
 class SignupForm(forms.ModelForm):
@@ -24,3 +23,4 @@ class SignupForm(forms.ModelForm):
                 'name': '이름',
                 'veg_type': '채식 단계'
         }
+
