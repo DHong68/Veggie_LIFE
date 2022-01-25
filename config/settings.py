@@ -79,18 +79,16 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    'custom': {    
+    'custom': {   
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'seoul0101',
         'USER': 'seoul0101',
         'PASSWORD': 'soodogwon11',
         'HOST': '13.125.52.234',
         'PORT': 3306
-    },
-
-
-
+    }
 }
+DATABASE_ROUTERS = ['reviews.router.DBRouter']
 
 DATABASE_ROUTERS = ['user.router.DBRouter']
 
