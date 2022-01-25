@@ -1,6 +1,7 @@
 {% extends "user/base.html"%}
 {% block content %}
 
+
 <form action="{% url 'user:signup' %}" method="post">
     {% csrf_token %}
     {% if form.errors %}
@@ -14,15 +15,58 @@
         </div>
     {% endif %}
     <body>
-    <form action="/user/signup/" method="post" >
+    {{ error }}
+    <form action="/user/signup/" method="post">
     <input type="hidden" name="csrfmiddlewaretoken" value="OSMBLWn2zhyAC4psUeESDrkYd8T7W55Qdccknk8vyXCBy08mu87eUCMyA6Oo3Nhn">
     <table>
-    <tr><th><label for="id_user_id">아이디:</label></th><td><input type="text" name="user_id" required size="30" maxlength="30" id="id_user_id"></td><a href="/user/check_id/" style="cursor:pointer">중복 확인</a></tr>
-    <tr><th><label for="id_password">비밀번호:</label></th><td><input type="password" name="password" required size="50" maxlength="50" id="id_password"></td></tr>
-    <tr><th><label for="id_re_password">비밀번호 확인:</label></th><td><input type="password" name="re_password" required size="50" maxlength="50" id="id_re_password"></td></tr>
-    <tr><th><label for="id_email">이메일:</label></th><td><input type="text" name="email" required size="50" maxlength="50" id="id_email"></td></tr>
-    <tr><th><label for="id_name">이름:</label></th><td><input type="text" name="name" required size="50" maxlength="50" id="id_name"></td></tr>
-    <tr><th><label for="id_veg_type">채식 단계:</label></th><td><input type="text" name="veg_type" required size="30" maxlength="30" id="id_veg_type"></td></tr>
+    <tr>
+        <th>
+            <label for="id_user_id">아이디:</label>
+        </th>
+            <td>
+                <input type="text" name="user_id" required size="30" maxlength="30" id="id_user_id">
+            </td>
+    </tr>
+    <tr>
+        <th>
+            <label for="id_password">비밀번호:</label>
+        </th>
+        <td>
+            <input type="password" name="password" required size="50" maxlength="50" id="id_password">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label for="id_re_password">비밀번호 확인:</label>
+        </th>
+        <td>
+            <input type="password" name="re_password" required size="50" maxlength="50" id="id_re_password">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label for="id_email">이메일:</label>
+        </th>
+        <td>
+            <input type="text" name="email" required size="50" maxlength="50" id="id_email">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label for="id_name">이름:</label>
+        </th>
+        <td>
+            <input type="text" name="name" required size="50" maxlength="50" id="id_name">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label for="id_veg_type">채식 단계:</label>
+        </th>
+        <td>
+            <input type="text" name="veg_type" required size="30" maxlength="30" id="id_veg_type">
+        </td>
+    </tr>
     </table>
     <input type="submit" value="가입">
     </form>
