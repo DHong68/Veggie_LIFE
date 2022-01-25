@@ -86,10 +86,11 @@ DATABASES = {
         'PASSWORD': 'soodogwon11',
         'HOST': '13.125.52.234',
         'PORT': 3306
-    },
+    }
 }
 DATABASE_ROUTERS = ['reviews.router.DBRouter']
 
+DATABASE_ROUTERS = ['user.router.DBRouter']
 
 
 LOGGING = {

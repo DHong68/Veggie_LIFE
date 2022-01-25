@@ -1,0 +1,12 @@
+{% extends "user/base.html"%}
+{% block content %}
+<form method="post" action="{% url 'user:login' %}" style="margin: auto; width: 220px;">
+    {% csrf_token %}
+    {{ error }} <br>
+    아이디 : <input type="text" name="user_id"><br>
+    비밀번호 : <input type="password" name="password"><br>
+    <input type="submit" value="로그인" style="margin: auto; width: 180px;">
+</form>
+
+
+{% endblock %}
