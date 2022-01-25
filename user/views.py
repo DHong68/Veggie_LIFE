@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.views.decorators.http import require_POST
 from .models import User
 from .forms import SignupForm
 
@@ -11,20 +10,18 @@ def home(request):
 def signup(request):
      if request.method == 'POST':
           form = SignupForm(request.POST)
+          re_password = request.POST.get('re_password')
           context = {}
           if form.is_valid():
                signupform = form.save(commit=False)
-               if User.objects.filter(user_id = signupform.user_id).exists():
-                    context['error'] = '이미 가입된 아이디입니다.'
-                    return render(request, "user/signup.html", context)
-               elif signupform.password != signupform.re_password:
+               if signupform.password != re_password:
                     context['error'] = '비밀번호가 일치하지 않습니다.' 
                     return render(request, "user/signup.html", context)
                signupform.save()
-          return redirect('/user/login')
+               return redirect('/user/login')
      else:
           form = SignupForm()
-          return render(request, 'user/signup.html', {'form': form})
+     return render(request, 'user/signup.html', {'form': form})
 
 
 def login(request):
@@ -32,6 +29,8 @@ def login(request):
           user_id = request.POST.get('user_id')
           password = request.POST.get('password')
           context = {}
+          print(user_id)
+          print(password)
           try:
                user = User.objects.get(user_id = user_id)
                if password != user.password:
@@ -50,3 +49,12 @@ def login(request):
 def logout(request):
      request.session.flush()
      return redirect('/')
+
+
+# from django.views.decorators.http import require_POST
+# @require_POST
+# def delete(request, user_id):
+#      delete_user = User.objects.get(user_id = user_id)
+#      delete_user.delete()
+#      logout(request)
+#      return redirect('/')
