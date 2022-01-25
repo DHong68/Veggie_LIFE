@@ -1,7 +1,7 @@
 {% extends 'user/base.html' %}
 {% block content %}
 
-<div class="jumbotron">
+{% comment %} <div class="jumbotron">
   <div class="container text-center">
     <table class="table table-hover">
       <thead>
@@ -11,7 +11,7 @@
       </thead>
       <body>
         <hr>
-        {% for item in review %}
+        {% for item in info %}
           <tr>
             <td>{{ item.store_name }}</td>
             <td>{{ item.title }}</td>
@@ -19,9 +19,86 @@
             <td>{{ item.date }}</td>
           </tr>
         {% endfor %}
+
+        <div style='text-align:center;'>
+          <ul class='pagination'>
+            {% for i in page_range %}
+              <li>
+              <a href='{% url "reviews:list" %}?page={{ i }}'>
+                {{ i }}
+              </a>
+              </li>
+            {% endfor %}
+            </ul>
+          </div>
+
       </body>
     </table>
   </div>
-</div>
+</div> {% endcomment %}
+
+
+
+<body style='margin:30px;'>
+  <table class='table table-striped'>
+  <tr>
+    <td>음식점 이름</td>
+    <td>제목</td>
+    <td>작성자</td>
+    <td>작성일자</td>
+  </tr>
+  {% for item in info %}
+  <tr>
+    <td>{{ item.store_name }}</td>
+    <td>{{ item.title }}</td>
+    <td>{{ item.member_id }}</td>
+    <td>{{ item.date }}</td>
+  </tr>
+  {% endfor %}
+  </table>
+
+
+  <style>
+    .pagination {
+      display: inline-block;
+    }
+    
+    .pagination a {
+      color: white;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+    }
+  </style>
+
+  <div style='text-align:center;'>
+    <ul class='pagination'>
+      {% if has_previous == 1 %}
+        <a href='{% url "reviews:list" %}?page={{ start_page | add:"-1" }}'>
+          {{ "[Prev]" }}
+        </a>
+      {% endif %}
+      {% for i in page_range %}
+        {% if i == now_page %}
+          <a href='{% url "reviews:list" %}?page={{ i }}' style="color: green">
+            {{ i }}
+          </a>
+        {%else %}
+          <a href='{% url "reviews:list" %}?page={{ i }}'>
+            {{ i }}
+          </a>
+        {% endif %}
+
+      {% endfor %}
+      {% if has_next == 1  %}
+        <a href='{% url "reviews:list" %}?page={{ end_page | add:"+1" }}'>
+          {{ "[Next]" }}
+        </a>
+      {% endif %}
+
+    </ul>
+  </div>
+
+</body>
 
 {% endblock %}
