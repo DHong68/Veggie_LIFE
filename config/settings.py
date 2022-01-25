@@ -88,6 +88,7 @@ DATABASES = {
         'PORT': 3306
     },
 }
+DATABASE_ROUTERS = ['reviews.router.DBRouter']
 
 
 

@@ -1,0 +1,127 @@
+{% extends "user/base.html"%}
+
+
+
+
+
+{% block content %}
+
+<div class="container id="searchbar">
+    <div class="search">
+       <input type="text" class="searchTerm" placeholder="What are you looking for?">
+       <button type="submit" class="searchButton">
+         <i class="fa fa-search"></i>
+      </button>
+    </div>
+ </div>
+
+
+
+<div class="container" id=searchbar2>              
+ <!-- <form method=post action="{% url 'search:result' %}" target="_blank" > -->
+  <div class="d-flex align-items-center">
+    <form method=post  target="_blank" >
+    <table >     <tr>       <td>           
+        <input type=text id=p size=25  />   
+        <!-- {% csrf_token %}       -->
+         <button type="button" onclick="view()">검색</button> 
+          </td>    
+         </tr>  
+         <Tr>
+            <Td>
+                <label for="vegan">비건</label>
+                <input type="checkbox" name="vegantype"  value="vegan" onclick="clickCheck(this)">
+                <label for="Lacto">락토 </label>
+                <input type="checkbox"name="vegantype" value="Lacto" onclick="clickCheck(this)">
+                <label for="LactoOvo">락토 오보 </label>
+                <input type="checkbox"name="vegantype" value="LactoOvo" onclick="clickCheck(this)">
+                <label for="Pesco">페스코</label>
+                <input type="checkbox"name="vegantype" value="Pesco" onclick="clickCheck(this)">
+                
+            </Td>
+         </Tr>
+         </table>
+         </form>
+         </div>   
+         </div>
+     
+        
+
+
+
+    
+       <script>
+
+         function checkOnlyOne(element) {
+            const checkboxes = document.getElementsByName("vegantype");
+            checkboxes.forEach((cb) => {
+            cb.checked = false;
+            })
+            element.checked = true;
+            }
+            
+            function clickCheck(target) {
+            document.querySelectorAll(`input[type=checkbox]`)
+            .forEach(el => el.checked = false);
+            target.checked = true;
+            }
+        </script>
+         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+         <script>
+         function view(){
+            var pd=document.getElementById('p').value;
+            
+            console.log(pd)
+             
+         const data =
+             axios({
+         url: 'http://openapi.foodsafetykorea.go.kr/api/a93411c41a8541e19060/C002/json/1/10/PRDLST_NM='+pd,
+         method: 'get',
+        
+        });
+         data.then(function (result) {
+         console.log(result.data);
+    
+            let html='';
+             let length=result.data['C002']['row'].length;
+            console.log(length);
+            for(let i=0;i<length;i++){
+        
+             let product= data['C002']['row'][i]['PRDLST_NM'];
+             let Brand= data['C002']['row'][i]['BSSH_NM'];
+    
+                html+=`<tr><td>${product}<td></tr>`
+                html+=`<tr><td>${Brand}<td></tr>`
+           
+               
+            }
+            document.body.innerHTML+= html;
+         });
+        }
+         </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           
+          
+
+     
+{% endblock %}
