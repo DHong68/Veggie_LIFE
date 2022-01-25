@@ -11,7 +11,7 @@ class SignupForm(forms.ModelForm):
         fields = ['user_id', 'password', 'email', 'name', 'veg_type']
         
         widgets = { 
-                'user_id': forms.TextInput(attrs={'required': True, 'size': 30}),
+                'user_id': forms.TextInput(attrs={'required': True, 'size': 30, }),
                 'password': forms.PasswordInput(attrs={'required': True, 'size': 50}),
                 'email': forms.TextInput(attrs={'required': True, 'size': 50}),
                 'name': forms.TextInput(attrs={'required': True, 'size': 50}),
