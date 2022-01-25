@@ -1,12 +1,11 @@
 from django.db import models
-
-# from user.models import Member
+from user.models import User
 
 class Review(models.Model):
-# member_id = models.ForeignKey(  // 아직 member 모델이 없어서 일단 주석
-#   Member, on_delete = models.SET_NULL, null=True, db_column = 'member_id')
   id = models.IntegerField(primary_key=True)
-  member_id = models.IntegerField()
+  member_id = models.ForeignKey(
+    User, related_name="review", on_delete=models.DO_NOTHING, db_column="member_id"
+  )
   date = models.DateTimeField()
   store_name = models.CharField(max_length=50)
   title = models.CharField(max_length=50)
