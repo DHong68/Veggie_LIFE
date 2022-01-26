@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="jumbotron">
-    <div class="container" style="background-color:#98C138; color:white; border-radius:10px; padding-bottom:60px; margin-top:30px; margin-bottom:300px">
+    <div class="container" style="background-color:#98C138; color:white; border-radius:10px; padding-bottom:60px; margin-top:30px;">
         <form method="post" action="{% url 'reviews:write' %}" enctype="multipart/form-data">
             
             {% csrf_token %}
