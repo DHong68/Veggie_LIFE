@@ -120,7 +120,7 @@ def search(request):
 
 
 def details(request):
-    store_name = request.GET.get('menu')
+    store_name = request.GET.get('store')
     store = Store.objects.filter(name=store_name)
 
-    return render(request, 'store/details.html', {})
+    return render(request, 'store/details.html', {"store": store})

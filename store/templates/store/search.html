@@ -78,7 +78,7 @@
                     <h3> 검색 결과가 없습니다 </h3>
                     
                 {% else %}
-                <form id='fm' method="GET" action="{% url 'store:menu' %}">
+                <form id='fm' method="GET" action="{% url 'store:details' %}">
                     <table class='table table-responsive'>
                         <colgroup>
                             <col style="width:15%">
@@ -140,7 +140,7 @@
 </div>
 <script> 
     function getName(name) {
-        window.location.href="{% url 'store:menu' %}?menu=" + name;
+        window.location.href="{% url 'store:details' %}?store=" + name;
     }
 </script>
 {% endblock %}
