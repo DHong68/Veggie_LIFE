@@ -101,7 +101,7 @@ DATABASES = {
         'PORT': 3306
     }
 }
-DATABASE_ROUTERS = ['reviews.router.DBRouter', 'user.router.DBRouter']
+DATABASE_ROUTERS = ['reviews.router.DBRouter', 'user.router.DBRouter', 'store.router.DBRouter']
 
 # DATABASE_ROUTERS = ['user.router.DBRouter']
 

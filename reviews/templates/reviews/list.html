@@ -1,75 +1,101 @@
 {% extends 'reviews/base.html' %}
 {% block content %}
 
-<form method="get" action="{% url 'reviews:list' %}">
-  {% comment %} {% csrf_token %} {% endcomment %}
-  페이지 : <input type="text" name="page">
-  음식점 검색 : <input type="text" name="store_name">
-  <input type="submit" value="검색">
-</form>
 
-<body style='margin:30px;'>
-  <table class='table table-striped'>
-  <tr>
-    <td>작성자</td>
-    <td>제목</td>
-    <td>음식점 이름</td>
-    <td>작성일자</td>
-  </tr>
-  {% for item in info %}
-  <tr>
-    <td>{{ item.member_id.user_id }}</td>
-    <td>{{ item.title }}</td>
-    <td>{{ item.store_name }}</td>
-    <td>{{ item.date }}</td>
-  </tr>
-  {% endfor %}
-  </table>
+<div class="container" style="margin-bottom: 10px; margin-top:10px">
+  <form method="GET" action="{% url 'reviews:list' %}" class="row g-2 justify-content-center">
+
+      <div id="store_name" class="col-md-5">
+          {% if store_name %}
+              <input class="form-control" name="store_name" type="text" value="{{ store_name }}">
+          {% else %}
+              <input class="form-control" name="store_name" type="text" placeholder="음식점을 입력하세요">
+          {% endif %}
+      </div> 
+
+      <div class="col-md-1">
+          <button class="btn btn-light" type="submit">검색</button>
+      </div>
+
+  </form>
+</div>
+
+<form id='fm' method="GET" action="{% url 'reviews:details' %}">
+  <body style='margin:30px;'>
+    <table class='table table-striped'>
+    <tr>
+      <td>게시글 번호</td>
+      <td>작성자</td>
+      <td>제목</td>
+      <td>음식점 이름</td>
+      <td>작성일자</td>
+    </tr>
+    {% for item in info %}
+    <tr>
+      <td name="item.id"><p onclick="getID('{{ item.id }}')">{{ item.id }}</p></td>
+      <td name="item.member_id.user_id"><p onclick="getID('{{ item.id }}')">{{ item.member_id.user_id }}</p></td>
+      <td name="item.title"><p onclick="getID('{{ item.id }}')">{{ item.title }}</p></td>
+      <td name="item.store_name"><p onclick="getID('{{ item.id }}')">{{ item.store_name }}</p></td>
+      <td name="item.date"><p onclick="getID('{{ item.id }}')">{{ item.date }}</p></td>
+    </tr>
+    {% endfor %}
+    </table>
 
 
-  <style>
-    .pagination {
-      display: inline-block;
-    }
-    
-    .pagination a {
-      color: white;
-      float: left;
-      padding: 8px 16px;
-      text-decoration: none;
-    }
-  </style>
+    <style>
+      .pagination {
+        display: inline-block;
+      }
+      
+      .pagination a {
+        color: white;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+      }
+    </style>
 
 
-  <div style='text-align:center;'>
-    <ul class='pagination'>
-      <td>{{ store_name }}</td>
-      {% if has_previous == 1 %}
-        <a href='{% url "reviews:list" %}?page={{ start_page | add:"-1" }}&?store_name={{ store_name }}'>
-          {{ "[Prev]" }}
-        </a>
-      {% endif %}
-      {% for i in page_range %}
-
-        {% if i == now_page %}
-          <a href='{% url "reviews:list" %}?page={{ i }}&?store_name={{ store_name }}' style="color: green">
-            {{ i }}
-          </a>
-        {%else %}
-          <a href='{% url "reviews:list" %}?page={{ i }}&?store_name={{ store_name }}'>
-            {{ i }}
+    <div style='text-align:center;'>
+      <ul class='pagination'>
+        {% if has_previous %}
+          <a href='{% url "reviews:list" %}?page={{ start_page | add:"-1" }}&store_name={{ store_name }}'>
+            {{ "[Prev]" }}
           </a>
         {% endif %}
 
-      {% endfor %}
-      {% if has_next == 1  %}
-        <a href='{% url "reviews:list" %}?page={{ end_page | add:"+1" }}&?store_name={{ store_name }}'>
-          {{ "[Next]" }}
-        </a>
-      {% endif %}
+        {% for i in page_range %}
+          {% if i == now_page %}
+            <a href='{% url "reviews:list" %}?page={{ i }}&store_name={{ store_name }}' style="color: green">
+              {{ i }}
+            </a>
+          {%else %}
+            <a href='{% url "reviews:list" %}?page={{ i }}&store_name={{ store_name }}'>
+              {{ i }}
+            </a>
+          {% endif %}
+        {% endfor %}
+        
+        {% if has_next%}
+          <a href='{% url "reviews:list" %}?page={{ end_page | add:"+1" }}&store_name={{ store_name }}'>
+            {{ "[Next]" }}
+          </a>
+        {% endif %}
 
-    </ul>
-  </div>
-</body>
+      </ul>
+    </div>
+  </body>
+</form>
+
+
+<form action="{% url 'reviews:write' %}">
+  <button>글쓰기</button>
+</form>
+
+<script> 
+  function getID(id) {
+      window.location.href="{% url 'reviews:details' %}?id=" + id;
+  }
+</script>
 
 {% endblock %}
