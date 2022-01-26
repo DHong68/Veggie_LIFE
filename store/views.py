@@ -49,22 +49,23 @@ def show(request):
 
 def search(request):
     stores = Store.objects.exclude(name='상호명').order_by('name')
+    all = stores
 
     key = False
 
-    gu = request.GET.get('gu')
-    if gu:
+    gu = request.GET.get('gu', '')
+    if gu and gu != '전체':
         stores = stores.filter(
             Q(gu__icontains=gu)
         )
 
-    type = request.GET.get('type')
-    if type:
+    type = request.GET.get('type', '')
+    if type and type != '전체':
         stores = stores.filter(
             Q(type__icontains=type)
         )
 
-    searched = request.GET.get('searched')
+    searched = request.GET.get('searched', '')
     if searched:
         stores = stores.filter(
             Q(name__icontains=searched) |
@@ -110,7 +111,8 @@ def search(request):
         'searched': searched, 
         'gu': gu,
         'type': type,
-        'key': key
+        'key': key, 
+        'all': all
     }
 
     return render(
@@ -120,7 +122,7 @@ def search(request):
 
 
 def details(request):
-    store_name = request.GET.get('menu')
+    store_name = request.GET.get('store')
     store = Store.objects.filter(name=store_name)
 
-    return render(request, 'store/details.html', {})
+    return render(request, 'store/details.html', {"store": store})
