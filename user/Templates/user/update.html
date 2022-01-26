@@ -10,7 +10,7 @@
         
         <hr style="background-color:#FFFFFF; border: 0; height: 3px;">
 
-        <form action="{% url 'user:update' user_id=user_id %}" method="post">
+        <form action="{% url 'user:update' user_id=user.user_id %}" method="post">
             
             {% csrf_token %}
             
