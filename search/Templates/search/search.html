@@ -1,127 +1,197 @@
-{% extends "user/base.html"%}
-
-
-
-
-
+{% extends "search/base.html"%}
+{% load static%}
 {% block content %}
-
-<div class="container id="searchbar">
-    <div class="search">
-       <input type="text" class="searchTerm" placeholder="What are you looking for?">
-       <button type="submit" class="searchButton">
-         <i class="fa fa-search"></i>
-      </button>
-    </div>
- </div>
-
-
-
-<div class="container" id=searchbar2>              
- <!-- <form method=post action="{% url 'search:result' %}" target="_blank" > -->
-  <div class="d-flex align-items-center">
-    <form method=post  target="_blank" >
-    <table >     <tr>       <td>           
-        <input type=text id=p size=25  />   
-        <!-- {% csrf_token %}       -->
+        
+<div class="container" id="searchbar2">              
+ <!-- <form method=post action="/search/result/" target="_blank" > -->
+  <div class="d-flex align-items-center" style="overflow: auto">
+    <form method="post" target="_blank">
+    <table>     <tbody><tr>       <td>           
+        <input type="text" id="p" size="25">   
          <button type="button" onclick="view()">검색</button> 
           </td>    
          </tr>  
-         <Tr>
-            <Td>
-                <label for="vegan">비건</label>
-                <input type="checkbox" name="vegantype"  value="vegan" onclick="clickCheck(this)">
-                <label for="Lacto">락토 </label>
-                <input type="checkbox"name="vegantype" value="Lacto" onclick="clickCheck(this)">
-                <label for="LactoOvo">락토 오보 </label>
-                <input type="checkbox"name="vegantype" value="LactoOvo" onclick="clickCheck(this)">
-                <label for="Pesco">페스코</label>
-                <input type="checkbox"name="vegantype" value="Pesco" onclick="clickCheck(this)">
-                
-            </Td>
-         </Tr>
-         </table>
+         <tr>
+         </tr>
+         </tbody></table>
          </form>
          </div>   
-         </div>
-     
-        
+        </div>
+        <table class="table container " id="table"> 
+             <tbody></tbody>
+</table>
+</div>
 
 
 
-    
-       <script>
+  <div class="modal fade" id="veganModal" tabindex="-1" role="dialog" aria-labelledby="veganModalLabel"  >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="veganModalLabel">상품 상세</h4>
+        </div>
+        <div class="modal-body">     
+       <table class=" table"> 
+          <tbody><tr> <td>제조사</td>  <td id="mcp"></td></tr>
+          <tr> <td>상품명</td>  <td name="mpd" id="mpd"></td> </tr>
+              <tr> <td>상품 사진</td>   <td> <img src="{% static 'search/img/vegan-food.png' %}" width="150rem" height="150rem"></td></tr> 	
+            <tr> <td>첨가물</td>  <td name="mingri" id="mingri"></td></tr>	
+            <tr> <td>  <i class="fas fa-leaf"></i> <i class="far fa-check-square"> </i> 
+              </td><td name="mtypes" id="mtypes"> </td></tr>	
+                  
+       </tbody></table>
+        <div class="modal-footer">
+	          <button type="button" class="btn btn-default" id="closebtn" data-dismiss="modal">닫기</button></div>
+        </div>   
+    </div></div>
+    </div>      
 
-         function checkOnlyOne(element) {
-            const checkboxes = document.getElementsByName("vegantype");
-            checkboxes.forEach((cb) => {
-            cb.checked = false;
-            })
-            element.checked = true;
-            }
-            
-            function clickCheck(target) {
-            document.querySelectorAll(`input[type=checkbox]`)
-            .forEach(el => el.checked = false);
-            target.checked = true;
-            }
-        </script>
-         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
          <script>
          function view(){
             var pd=document.getElementById('p').value;
-            
-            console.log(pd)
-             
          const data =
              axios({
-         url: 'http://openapi.foodsafetykorea.go.kr/api/a93411c41a8541e19060/C002/json/1/10/PRDLST_NM='+pd,
+         url: 'http://openapi.foodsafetykorea.go.kr/api/a93411c41a8541e19060/C002/json/1/11/PRDLST_NM='+pd,
          method: 'get',
         
         });
          data.then(function (result) {
-         console.log(result.data);
-    
-            let html='';
-             let length=result.data['C002']['row'].length;
-            console.log(length);
-            for(let i=0;i<length;i++){
-        
-             let product= data['C002']['row'][i]['PRDLST_NM'];
-             let Brand= data['C002']['row'][i]['BSSH_NM'];
-    
-                html+=`<tr><td>${product}<td></tr>`
-                html+=`<tr><td>${Brand}<td></tr>`
-           
-               
+            let html=' ';  
+            let test=' ';
+            test=result.data;
+            html +=`<tr><th>-</th>`
+            html +=`<th>제조사</th>`
+            html +=`<th>상품명</th>`
+            html +=`<th>품목</th></tr>`
+
+            let len=result.data['C002']['row'].length;
+            for(let i=0;i<len;i++){       
+             let num=i+1;
+             let product= test['C002']['row'][i]['PRDLST_NM'];
+             let Brand= test['C002']['row'][i]['BSSH_NM'];
+            let ingredient=test['C002']['row'][i]['RAWMTRL_NM']; 
+             let type=test['C002']['row'][i]['PRDLST_DCNM'];
+                html+=`<tr id="producttr"  data-toggle='modal' data-brand="${Brand}" data-product="${product}" data-ingredient="${ingredient}" data-target='#veganModal'><td>${i+1}</td>`
+                html+=`<td id="brand">${Brand}</td>`
+                html+=`<td id="product"> ${product}</td>`
+                html+=`<td id="ingredient" td style="visibility:hidden;display:none">${ingredient}</td>`
+                html+=`<td id="type">${type}</td>`
+                
             }
-            document.body.innerHTML+= html;
-         });
-        }
+            html+=`</tbody> </table>`
+            result.data='';
+            document.getElementById("table").innerHTML=html;
+         })
+        };
+     
+ 
+        // 모달창 
+        //가져올 데이터
+ 
+        $('#veganModal').on('show.bs.modal', function(event) {   	
+    
+            cp=$(event.relatedTarget).data('brand');
+            pd=$(event.relatedTarget).data('product');
+            ingri=$(event.relatedTarget).data('ingredient');
+            vt=$(event.relatedTarget).data('vt');
+                console.log(cp+1);
+                console.log($('#mcp').val)
+            $('#mcp').text(cp);
+            $("#mpd").text(pd);	
+            $("#mingri").text(ingri);	
+            //1. 첨가물 
+            var count = ingri.split(',').length - 1;
+            //2. 첨가물 배열  
+             var ingriarray=ingri.split(',');
+             var bt=['다다'];
+                //계란 
+            var eggs=['전란액','난황액','난백액','난백분','전란분','피단','알부민','계란흰자'];
+                //생선  
+            var fish=['냉동연육','돔연육','부레풀','오징어','새우'];
+                //우유 
+            var mlik=['우유', '산양유', '전지분유',  '가당연유', '무당연유', '전지연유', '탈지연유','버터유', '농축유류', '유크림류', '버터류', 
+             '치즈류', '분유류', '유청류', '유당', '유단백가수분해식품', '유함유가공품'];
+                //고기
+            var meat=['소시지','젤라틴','펩신','소고기','돼지고기','오리고기','비프분말']                
+                var vegan=['벌꿀','사양벌꿀']
+                //비건 -- 완전 채식
+                //계란 우유 ok-락토 오보
+                //락토--우유 ok
+                //생선 달걀 우유 ok ->페스코		 
+           
+                // Loop1 : for(i=0;i<count;i++){
+                //     for(var j=0;j<meat.length;i++){
+                //         if(ingriarray[i]==meat[j]){ //고기
+                //             bt=[];
+                //             break  Loop1;
+                //             } 
+                //         } 
+
+                //      for(var p=0;p<fish.length;p++){// 페스코
+                //          if(ingriarray[i]==fish[p]){
+                //              bt=['pesco']
+                //              break Loop1;
+                //               }                            
+                //          }
+                //          //ovo
+                //       for(var o=0;o<eggs.length;o++){//
+                //          if(ingriarray[i]==eggs[o]){
+                //             bt=['pesco','lacto']
+                //              break Loop1;;
+                //         }
+
+                //      }
+                //        //lacto
+                //      for(var l=0;l<mlik.length;l++){// 페스코
+                //          if(ingriarray[i]==mlik[l]){
+                //              bt=['pesco','lacto','lactoovo']; //우유 먹는애들이 락토, 락토 오보
+                //              break Loop1;
+                //              }                             
+                //             }
+
+
+
+
+                //     };
+                //     console.log(vt)
+           
+           
+            });
+                
+               
+                
+                    
+             
+
+
+          
+            
+            
+
+
+
+
          </script>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-           
-          
-
-     
+                 
 {% endblock %}
