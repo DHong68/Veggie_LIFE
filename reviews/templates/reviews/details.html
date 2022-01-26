@@ -10,7 +10,13 @@
     </tr>
     <tr>
     <td>{{ review.id }}</td>
-    <td>{{ review.member_id.user_id }}</td>
+
+    {% if review.member_id %}
+        <td>{{ review.member_id.user_id }}</td>
+    {% else %}
+        <td>(알 수 없음)</td>
+    {% endif %}
+
     <td>{{ review.date }}</td>
     <tr>
     </table>
@@ -32,13 +38,17 @@
     <br>
     {% if is_logined %}
 
-        <form action="{% url 'reviews:update' id=id %}">
-            <button class='btn btn-primary'>수정</button>
-        </form>
-        <br>
-        <form action="{% url 'reviews:delete' id=id %}">
-            <button class='btn btn-primary'>삭제</button>
-        </form>
+        <div style="border: 1px; float: left; width: 10%;">
+            <form action="{% url 'reviews:update' id=id %}">
+                <button class='btn btn-primary'>수정</button>
+            </form>
+        </div>
+        <div style="border: 1px; float: left; width: 10%;">
+            <form action="{% url 'reviews:delete' id=id %}">
+                <button class='btn btn-primary'>삭제</button>
+            </form>
+        </div>
+
     {% endif %}
 
 
