@@ -11310,5 +11310,7 @@ footer.footer {
   background-color: #c5e0b4;
   padding-top: 2rem;
   padding-bottom: 4rem;
+  /* padding-bottom: 0rem;
+  padding-top: 0rem; */
 }
 
