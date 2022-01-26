@@ -1,6 +1,18 @@
 {% extends 'user/base.html' %}
 {% block content %}
 
+<style>
+  .pagination {
+    display: inline-block;
+  }
+  
+  .pagination a {
+    color: white;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+</style>
 
 <div class="container" style="margin-bottom: 10px; margin-top:10px">
   <form method="GET" action="{% url 'reviews:list' %}" class="row g-2 justify-content-center">
@@ -21,7 +33,7 @@
 </div>
 
 <form id='fm' method="GET" action="{% url 'reviews:details' %}">
-  <body style='margin:30px;'>
+  <body style='margin:30px; overflow:scroll'>
     <table class='table table-striped'>
     <tr>
       <td>게시글 번호</td>
@@ -40,20 +52,6 @@
     </tr>
     {% endfor %}
     </table>
-
-
-    <style>
-      .pagination {
-        display: inline-block;
-      }
-      
-      .pagination a {
-        color: white;
-        float: left;
-        padding: 8px 16px;
-        text-decoration: none;
-      }
-    </style>
 
 
     <div style='text-align:center;'>
