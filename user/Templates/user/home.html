@@ -1,12 +1,1 @@
 {% extends "user/base.html"%}
-{%load static%}
-{% comment %} {% block content %}
-
-<form class="home" method="POST" action="{% url 'user:home' %}">
-    {% csrf_token %}        
-    <input class="form-control me-2" type="search" placeholder="상품을 입력해주세요." name="searched" aria-label="Search">
-    <button class="btn btn-outline-success" type="submit"> Search </button>
-</form>
-
-
-{% endblock %} {% endcomment %}
