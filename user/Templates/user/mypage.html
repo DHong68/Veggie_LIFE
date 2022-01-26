@@ -17,7 +17,8 @@
         <strong style="font-size:20px;color:white;">Email : {{ user.email }}</strong><br>
         <strong style="font-size:20px;color:white;">채식 단계 : {{ user.veg_type }}</strong><br>
 
-        <a href="{% url 'user:update' user_id=user.user_id %}">
+        {% comment %} <a href="{% url 'user:update' user_id=user.user_id %}"> {% endcomment %}
+        <a href="{% url 'user:update' user.user_id %}">
             <button class="btn btn-success"
                     style="
                         width:100;
