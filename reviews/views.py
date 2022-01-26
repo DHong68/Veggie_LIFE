@@ -128,7 +128,7 @@ def details(request):
     review = Review.objects.get(id=id)
 
     is_logined = False
-    if review.member_id is not None:
+    if 'user_id' in request.session and review.member_id:
         if request.session['user_id'] == review.member_id.user_id:
             is_logined = True
 

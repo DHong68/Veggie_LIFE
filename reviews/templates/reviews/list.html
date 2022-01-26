@@ -22,7 +22,7 @@
           {% if user_id %}
               <input class="form-control" name="user_id" type="text" value="{{ user_id }}">
           {% else %}
-              <input class="form-control" name="user_id" type="text" placeholder="제목 입력">
+              <input class="form-control" name="user_id" type="text" placeholder="작성자 입력">
           {% endif %}
       </div> 
 
@@ -62,7 +62,11 @@
     {% for item in info %}
     <tr>
       <td name="item.id"><p onclick="getID('{{ item.id }}')">{{ item.id }}</p></td>
-      <td name="item.member_id.user_id"><p onclick="getID('{{ item.id }}')">{{ item.member_id.user_id }}</p></td>
+      {% if item.member_id is not None %}
+        <td name="item.member_id.user_id"><p onclick="getID('{{ item.id }}')">{{ item.member_id.user_id }}</p></td>
+      {% else %}
+        <td name="item.member_id.user_id"><p onclick="getID('{{ item.id }}')">(알 수 없음)</p></td>
+      {% endif %}
       <td name="item.title"><p onclick="getID('{{ item.id }}')">{{ item.title }}</p></td>
       <td name="item.store_name"><p onclick="getID('{{ item.id }}')">{{ item.store_name }}</p></td>
       <td name="item.date"><p onclick="getID('{{ item.id }}')">{{ item.date }}</p></td>
