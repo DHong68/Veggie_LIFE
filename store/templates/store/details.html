@@ -1,0 +1,19 @@
+<html>
+
+{% extends "user/base.html" %}
+
+{% block content %}
+{% for s in store %}
+    <h2> {{ s.name }} - {{ s.type }}</h2>
+    <h3> 전화번호: {{ s.phone }}</h3> 
+    <h3> 주소: {{ s.address }} </h3>
+    <h3> 메뉴 </h3>
+    
+    {% for m in s.menu_as_list %}
+        {{ m }}<br>
+    {% endfor %}
+
+{% endfor %}
+
+{% endblock%}
+</html>

@@ -1,8 +1,7 @@
 <html>
-
 {% extends "user/base.html"%}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
+<body>
 {% block content %}
 <div class="container" style="margin-bottom: 10px; margin-top:10px">
     <form method="GET" action="{% url 'store:search' %}" class="row g-2 justify-content-center">
@@ -10,7 +9,8 @@
         <div class="col-md-2" id="gu">
             <select class="form-select" name="gu" selected="구">
                 <option value='' disabled selected>구</option>
-
+                
+                <<option value="전체">전체</option>
                 <option value="강남구">강남구</option>
                 <option value="강동구">강동구</option>
                 <option value="강북구">강북구</option>
@@ -42,6 +42,8 @@
         <div class="col-md-2" id="type">
             <select name="type" class="form-select" selected="업종">
                 <option value='' disabled selected>업종</option>
+
+                <<option value="전체">전체</option>
                 <option value="한식">한식</option>
                 <option value="양식">양식</option>
                 <option value="중식">중식</option>
@@ -70,43 +72,52 @@
     </form>
 </div>
 
-<div class="container">
+<style>
+    .pagination {
+      display: inline-block;
+      width: 100%
+    }
+    
+    .pagination a {
+      color: white;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+    }
+  </style>
+<div class='container'>
     <div class="row justify-content-center" style='margin:30px;'>
-        <div class="col-auto">
+        <div class="col">
             {% if key %}
                 {% if not stores %}
                     <h3> 검색 결과가 없습니다 </h3>
                     
                 {% else %}
-                <form id='fm' method="GET" action="{% url 'store:menu' %}">
-                    <table class='table table-responsive'>
+                <form id='fm' method="GET" action="{% url 'store:details' %}">
+                    <table class='table table-striped'>
                         <colgroup>
+                            <col style="width:25%;">
                             <col style="width:15%">
-                            <col style="width:10%">
-                            <col style="width:10%">
-                            <col style="width:25%">
+                            <col style="width:20%">
                             <col style="width:40%">
                         </colgroup>
                 
-                        <thead class="table">
+                        <thead>
                         <tr>
-                            <th scope="col">식당명</th>
-                            <th scope="col">업종</th>
-                            <th scope="col">전화번호</th>
-                            <th scope="col">주소</th>
-                            <th scope="col">메뉴</th>
+                            <th scope="col" style='text-align:center;'>식당명</th>
+                            <th scope="col" style='text-align:center;'>업종</th>
+                            <th scope="col" style='text-align:center;'>전화번호</th>
+                            <th scope="col" style='text-align:center;'>주소</th>
                         </tr>
                         </thead>
                         
                         {% for s in stores %}
                         <tbody>
                         <tr>
-                            <td name="store_name"><p onclick="getName('{{ s.name }}')">{{ s.name }}</p></td>
-                            <td>{{ s.type }}</td>
-                            <td>{{ s.phone }}</td>
+                            <td name="store_name" style='text-align:center;'><p onclick="getName('{{ s.name }}')">{{ s.name }}</p></td>
+                            <td style='text-align:center;'>{{ s.type }}</td>
+                            <td style='text-align:center;'>{{ s.phone }}</td>
                             <td>{{ s.address }}</td>
-                            <td>{{ s.menu }}</td>
-                        </tr>
                         </tbody>
                         {% endfor %}
                     </table>
@@ -115,34 +126,35 @@
                         <ul class='pagination'>
                         {% if is_prev %}
                             <li>
-                                <a href="{% url 'store:search' %}?search={{ searched }}&type={{ type }}&page={{ start_page | add:'-10' }}">[PREV]</a>
+                                <a href="{% url 'store:search' %}?search={{ searched }}&type={{ type }}&gu={{ gu }}&page={{ start_page | add:'-10' }}">[Prev]</a>
                             </li>
                         {% endif %}
                 
                         {% for i in page_range %}
-                        <li>
-                            <a href='{% url "store:search" %}?search={{ searched }}&type={{ type }}&page={{ i }}'>{{ i }}</a>
-                        </li>
+                            <li>
+                                <a href='{% url "store:search" %}?search={{ searched }}&type={{ type }}&gu={{ gu }}&page={{ i }}'>{{ i }}</a>
+                            </li>
                         {% endfor %}
                 
                         {% if is_next %}
                             <li>
-                                <a href="{% url 'store:search' %}?search={{ searched }}&type={{ type }}&page={{ start_page | add:'10' }}">[NEXT]</a>
+                                <a href="{% url 'store:search' %}?search={{ searched }}&type={{ type }}&gu={{ gu }}&page={{ start_page | add:'10' }}">[Next]</a>
                             </li>
                         {% endif %}
                         </ul>
                     </div>
                 </form>
                 {% endif %}
+                
             {% endif %}
         </div>
     </div>
 </div>
 <script> 
     function getName(name) {
-        window.location.href="{% url 'store:menu' %}?menu=" + name;
+        window.location.href="{% url 'store:details' %}?store=" + name;
     }
 </script>
 {% endblock %}
-
+</body>
 </html>

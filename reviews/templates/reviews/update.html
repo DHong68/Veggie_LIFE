@@ -1,9 +1,9 @@
-{% extends "user/base.html"%}
+{% extends 'user/base.html' %}
 {% block content %}
 
 <div class="jumbotron">
     <div class="container">
-        <form method="post" action="update/{{ review.id }}/">
+        <form method="post" action="{% url 'reviews:update' id=review.id %}" enctype="multipart/form-data">
       
             {% csrf_token %}
             <div class="form-group">
@@ -24,9 +24,11 @@
                 id="body">{{ review.body }}</textarea>
             </div>
 
-            <button type="submit" id="complete" class="btn btn-primary btn-block">
-                수정
-            </button>
+            <div>
+                <input type = "file" name = "file">
+            </div>
+
+            <input type="submit" value="수정" class='btn btn-primary'>
         </form>
     </div>
 </div>

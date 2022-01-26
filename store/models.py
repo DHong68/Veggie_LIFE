@@ -9,6 +9,9 @@ class Store(models.Model):
     address = models.TextField()
     menu = models.TextField()
 
+    def menu_as_list(self):
+        return self.menu.split(',')
+
     class Meta:
         db_table = 'store'
         app_label = 'store'

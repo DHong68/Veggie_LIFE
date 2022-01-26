@@ -1,0 +1,50 @@
+{% extends 'user/base.html' %}
+{% block content %}
+
+<body style='margin:30px;'>
+    <table class='table table-striped'>
+    <tr>
+      <td>게시글 번호</td>
+      <td>작성자</td>
+      <td>작성일자</td>
+    </tr>
+    <tr>
+    <td>{{ review.id }}</td>
+    <td>{{ review.member_id.user_id }}</td>
+    <td>{{ review.date }}</td>
+    <tr>
+    </table>
+
+    <label for="title">제목:</label>
+        <input type="text" class="form-control" name="title" 
+            id="title" value="{{ review.title }}">
+
+    <label for="body">내용:</label>
+        <input type="text" class="form-control" name="body" 
+            id="body" value="{{ review.body }}">
+
+
+    <br>
+    {% if review.file %}
+        <img src='{{ review.file.url }}' width='20%'>
+    {% endif %}
+    <br>
+    <br>
+    {% if is_logined %}
+
+        <form action="{% url 'reviews:update' id=id %}">
+            <button class='btn btn-primary'>수정</button>
+        </form>
+        <br>
+        <form action="{% url 'reviews:delete' id=id %}">
+            <button class='btn btn-primary'>삭제</button>
+        </form>
+    {% endif %}
+
+
+
+
+    
+</body>
+
+{% endblock %}
