@@ -6,8 +6,6 @@
     <tr>
       <td>게시글 번호</td>
       <td>작성자</td>
-      <td>제목</td>
-      <td>음식점 이름</td>
       <td>작성일자</td>
     </tr>
     <tr>
@@ -17,23 +15,9 @@
     <tr>
     </table>
 
-    <hr>
-   
-    
-    
-
-    <label for="title">게시글 번호:</label>
-        <input type="text" class="form-control" name="id" 
-            id="id" value="{{ review.id }}">
-    <label for="title">작성자:</label>
-        <input type="text" class="form-control" name="member_id" 
-            id="member_id" value="{{ review.member_id.user_id }}">
     <label for="title">제목:</label>
         <input type="text" class="form-control" name="title" 
             id="title" value="{{ review.title }}">
-    <label for="title">음식점 이름:</label>
-        <input type="text" class="form-control" name="store_name" 
-            id="store_name" value="{{ review.store_name }}">
 
     <label for="body">내용:</label>
         <input type="text" class="form-control" name="body" 
