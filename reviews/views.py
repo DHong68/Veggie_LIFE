@@ -4,29 +4,30 @@ from django.utils import timezone
 from .models import Review
 from django.core.paginator import Paginator
 from user.models import User
+from django.db.models import Q
 
 # Create your views here.
-# def write(request):
-#     if request.method == 'POST':
-#         title = request.POST.get('title')
-#         store_name = request.POST.get('store_name')
-#         body = request.POST.get('body')
+def write(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        store_name = request.POST.get('store_name')
+        body = request.POST.get('body')
 
-#         try:
-#             user_id = request.session['user_id']
+        try:
+            user_id = request.session['user_id']
 
-#             member = Member.objects.get(user_id=user_id)
+            member = User.objects.get(user_id=user_id)
 
-#             review = Review(title = title, store_name = store_name,
-#                 body = body, member = member)
-#             review.date = timezone
-#             review.save()
-#             return render(request, 'reviews/write_success.html')
+            review = Review(title = title, store_name = store_name,
+                body = body, member = member)
+            review.date = timezone
+            review.save()
+            return render(request, 'reviews/write_success.html')
         
-#         except:
-#             return render(request, 'reviews/write_fail.html')
+        except:
+            return render(request, 'reviews/write_fail.html')
     
-#     return render(request, 'reviews/write.html')
+    return render(request, 'reviews/write.html')
 
 # def upload(request):
 #     if request.method == 'POST':
@@ -81,19 +82,20 @@ from user.models import User
 
 def list(request):
 
-# store_name=''
-    # if request.method == 'POST':
-    #     store_name = request.POST.get('store_name')
-    # else:
-    #     store_name = request.GET.get('store_name', '')
-    now_page = request.GET.get('page', 1)
-    store_name = request.GET.get('store_name', '')
     review_list = Review.objects.order_by('-date')
 
 
-    if store_name != '':
-        review_list = Review.objects.filter(store_name=store_name).order_by('-date')
+    store_name = request.GET.get('store_name', '')
+    if store_name:
+        review_list = review_list.filter(
+            Q(store_name__icontains=store_name)
+        )
 
+
+    try:
+        now_page = int(request.GET.get('page'))
+    except TypeError:
+        now_page = 1
 
 
     p = Paginator(review_list, 10)
@@ -117,5 +119,18 @@ def list(request):
     }
     return render(
         request, 'reviews/list.html', context)
+
+
+
+
+def details(request):
+    id = request.GET.get('id')
+    review = Review.objects.get(id=id)
+
+    context = {
+        'id' : id,
+        'review' : review,
+    }
+    return render(request, 'reviews/details.html', context)
 
 
