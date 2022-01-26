@@ -1,7 +1,7 @@
 <html>
 
 {% extends "user/base.html"%}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+{% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> {% endcomment %}
 
 {% block content %}
 <div class="container" style="margin-bottom: 10px; margin-top:10px">
@@ -10,7 +10,8 @@
         <div class="col-md-2" id="gu">
             <select class="form-select" name="gu" selected="구">
                 <option value='' disabled selected>구</option>
-
+                
+                <<option value="전체">전체</option>
                 <option value="강남구">강남구</option>
                 <option value="강동구">강동구</option>
                 <option value="강북구">강북구</option>
@@ -42,6 +43,8 @@
         <div class="col-md-2" id="type">
             <select name="type" class="form-select" selected="업종">
                 <option value='' disabled selected>업종</option>
+
+                <<option value="전체">전체</option>
                 <option value="한식">한식</option>
                 <option value="양식">양식</option>
                 <option value="중식">중식</option>
@@ -70,6 +73,19 @@
     </form>
 </div>
 
+<style>
+    {% comment %} .pagination {
+      display: inline-block;
+    } {% endcomment %}
+    
+    .pagination a {
+      color: white;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+    }
+  </style>
+
 <div class="container">
     <div class="row justify-content-center" style='margin:30px;'>
         <div class="col-auto">
@@ -81,10 +97,9 @@
                 <form id='fm' method="GET" action="{% url 'store:details' %}">
                     <table class='table table-responsive'>
                         <colgroup>
-                            <col style="width:15%">
-                            <col style="width:10%">
-                            <col style="width:10%">
                             <col style="width:25%">
+                            <col style="width:15%">
+                            <col style="width:20%">
                             <col style="width:40%">
                         </colgroup>
                 
@@ -94,7 +109,6 @@
                             <th scope="col">업종</th>
                             <th scope="col">전화번호</th>
                             <th scope="col">주소</th>
-                            <th scope="col">메뉴</th>
                         </tr>
                         </thead>
                         
@@ -105,8 +119,6 @@
                             <td>{{ s.type }}</td>
                             <td>{{ s.phone }}</td>
                             <td>{{ s.address }}</td>
-                            <td>{{ s.menu }}</td>
-                        </tr>
                         </tbody>
                         {% endfor %}
                     </table>
@@ -115,25 +127,26 @@
                         <ul class='pagination'>
                         {% if is_prev %}
                             <li>
-                                <a href="{% url 'store:search' %}?search={{ searched }}&type={{ type }}&page={{ start_page | add:'-10' }}">[PREV]</a>
+                                <a href="{% url 'store:search' %}?search={{ searched }}&type={{ type }}&gu={{ gu }}&page={{ start_page | add:'-10' }}">[Prev]</a>
                             </li>
                         {% endif %}
                 
                         {% for i in page_range %}
                         <li>
-                            <a href='{% url "store:search" %}?search={{ searched }}&type={{ type }}&page={{ i }}'>{{ i }}</a>
+                            <a href='{% url "store:search" %}?search={{ searched }}&type={{ type }}&gu={{ gu }}&page={{ i }}'>{{ i }}</a>
                         </li>
                         {% endfor %}
                 
                         {% if is_next %}
                             <li>
-                                <a href="{% url 'store:search' %}?search={{ searched }}&type={{ type }}&page={{ start_page | add:'10' }}">[NEXT]</a>
+                                <a href="{% url 'store:search' %}?search={{ searched }}&type={{ type }}&gu={{ gu }}&page={{ start_page | add:'10' }}">[Next]</a>
                             </li>
                         {% endif %}
                         </ul>
                     </div>
                 </form>
                 {% endif %}
+                
             {% endif %}
         </div>
     </div>

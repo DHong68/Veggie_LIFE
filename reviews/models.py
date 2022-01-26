@@ -10,6 +10,7 @@ class Review(models.Model):
   store_name = models.CharField(max_length=50)
   title = models.CharField(max_length=50)
   body = models.TextField()
+  file = models.FileField()
 
   class Meta:
     db_table = 'review'

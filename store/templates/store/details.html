@@ -1,3 +1,8 @@
+<html>
+
+{% extends "user/base.html" %}
+
+{% block content %}
 {% for s in store %}
     <h2> {{ s.name }} - {{ s.type }}</h2>
     <h3> 전화번호: {{ s.phone }}</h3> 
@@ -10,4 +15,5 @@
 
 {% endfor %}
 
-
+{% endblock%}
+</html>
