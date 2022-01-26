@@ -1,74 +1,148 @@
-<link rel="stylesheet"
-href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<html>
 
-<form method="GET" action="{% url 'store:search' %}">
-    <div id="searched">
-        {% if searched %}
-            <input name="searched" type="text" value="{{ searched }}">
-        {% else %}
-            <input name="searched" type="text" placeholder="검색어를 입력하세요">
-        {% endif %}
-        <button class="btn btn-default" type="submit">검색</button>
-    </div>
-</form>
+{% extends "user/base.html"%}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-{% if searched %}
-    {% if not stores %}
-        <h3> 검색 결과가 없습니다 </h3>
-        
-    {% else %}
-    <body style='margin:30px;'>
-        <table class='table table-striped'>
-            <colgroup>
-                <col style="width:20%">
-                <col style="width:5%">
-                <col style="width:10%">
-                <col style="width:25%">
-                <col style="width:40%">
-            </colgroup>
-    
-            <tr>
-                <td>식당명</td>
-                <td>업종</td>
-                <td>전화번호</td>
-                <td>주소</td>
-                <td>메뉴</td>
-            </tr>
-            
-            {% for s in stores %}
-            <tr>
-                <td>{{ s.name }}</td>
-                <td>{{ s.type }}</td>
-                <td>{{ s.phone }}</td>
-                <td>{{ s.address }}</td>
-                <td>{{ s.menu }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    
-        <div style='text-align:center;'>
-            <ul class='pagination'>
-    
-            {% if is_prev %}
-                <li>
-                    <a href="{% url 'store:search' %}?page={{ start_page | add:'-10' }}&search={{searched}}">[PREV]</a>
-                </li>
-            {% endif %}
-    
-            {% for i in page_range %}
-            <li>
-                <a href='{% url "store:search" %}?page={{ i }}&search={{searched}}'>{{ i }}</a>
-            </li>
-            {% endfor %}
-    
-            {% if is_next %}
-                <li>
-                    <a href="{% url 'store:search' %}?page={{ start_page | add:'10' }}&search={{searched}}">[NEXT]</a>
-                </li>
-            {% endif %}
-    
-            </ul>
+{% block content %}
+<div class="container" style="margin-bottom: 10px; margin-top:10px">
+    <form method="GET" action="{% url 'store:search' %}" class="row g-2 justify-content-center">
+
+        <div class="col-md-2" id="gu">
+            <select class="form-select" name="gu" selected="구">
+                <option value='' disabled selected>구</option>
+
+                <option value="강남구">강남구</option>
+                <option value="강동구">강동구</option>
+                <option value="강북구">강북구</option>
+                <option value="강서구">강서구</option>
+                <option value="관악구">관악구</option>
+                <option value="광진구">광진구</option>
+                <option value="구로구">구로구</option>
+                <option value="금천구">금천구</option>
+                <option value="노원구">노원구</option>
+                <option value="도봉구">도봉구</option>
+                <option value="동대문구">동대문구</option>
+                <option value="동작구">동작구</option>
+                <option value="마포구">마포구</option>
+                <option value="서대문구">서대문구</option>
+                <option value="서초구">서초구</option>
+                <option value="성동구">성동구</option>
+                <option value="성북구">성북구</option>
+                <option value="송파구">송파구</option>
+                <option value="양천구">양천구</option>
+                <option value="영등포구">영등포구</option>
+                <option value="용산구">용산구</option>
+                <option value="은평구">은평구</option>
+                <option value="종로구">종로구</option>
+                <option value="중구">중구</option>
+                <option value="중랑구">중랑구</option>
+            </select>
         </div>
-    </body>
-    {% endif %}
-{% endif %}
+
+        <div class="col-md-2" id="type">
+            <select name="type" class="form-select" selected="업종">
+                <option value='' disabled selected>업종</option>
+                <option value="한식">한식</option>
+                <option value="양식">양식</option>
+                <option value="중식">중식</option>
+                <option value="일식">일식</option>
+                <option value="동남아">동남아</option>
+                <option value="베이커리">베이커리</option>
+                <option value="분식">분식</option>
+                <option value="인도/중동">인도/중동</option>
+                <option value="카페">카페</option>
+                <option value="기타">기타</option>
+            </select>
+        </div>
+
+        <div id="searched" class="col-md-5">
+            {% if searched %}
+                <input class="form-control" name="searched" type="text" value="{{ searched }}">
+            {% else %}
+                <input class="form-control" name="searched" type="text" placeholder="검색어를 입력하세요">
+            {% endif %}
+        </div> 
+
+        <div class="col-md-1">
+            <button class="btn btn-light" type="submit">검색</button>
+        </div>
+
+    </form>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center" style='margin:30px;'>
+        <div class="col-auto">
+            {% if key %}
+                {% if not stores %}
+                    <h3> 검색 결과가 없습니다 </h3>
+                    
+                {% else %}
+                <form id='fm' method="GET" action="{% url 'store:menu' %}">
+                    <table class='table table-responsive'>
+                        <colgroup>
+                            <col style="width:15%">
+                            <col style="width:10%">
+                            <col style="width:10%">
+                            <col style="width:25%">
+                            <col style="width:40%">
+                        </colgroup>
+                
+                        <thead class="table">
+                        <tr>
+                            <th scope="col">식당명</th>
+                            <th scope="col">업종</th>
+                            <th scope="col">전화번호</th>
+                            <th scope="col">주소</th>
+                            <th scope="col">메뉴</th>
+                        </tr>
+                        </thead>
+                        
+                        {% for s in stores %}
+                        <tbody>
+                        <tr>
+                            <td name="store_name"><p onclick="getName('{{ s.name }}')">{{ s.name }}</p></td>
+                            <td>{{ s.type }}</td>
+                            <td>{{ s.phone }}</td>
+                            <td>{{ s.address }}</td>
+                            <td>{{ s.menu }}</td>
+                        </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                        
+                    <div style='text-align:center;'>
+                        <ul class='pagination'>
+                        {% if is_prev %}
+                            <li>
+                                <a href="{% url 'store:search' %}?search={{ searched }}&type={{ type }}&page={{ start_page | add:'-10' }}">[PREV]</a>
+                            </li>
+                        {% endif %}
+                
+                        {% for i in page_range %}
+                        <li>
+                            <a href='{% url "store:search" %}?search={{ searched }}&type={{ type }}&page={{ i }}'>{{ i }}</a>
+                        </li>
+                        {% endfor %}
+                
+                        {% if is_next %}
+                            <li>
+                                <a href="{% url 'store:search' %}?search={{ searched }}&type={{ type }}&page={{ start_page | add:'10' }}">[NEXT]</a>
+                            </li>
+                        {% endif %}
+                        </ul>
+                    </div>
+                </form>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script> 
+    function getName(name) {
+        window.location.href="{% url 'store:menu' %}?menu=" + name;
+    }
+</script>
+{% endblock %}
+
+</html>
