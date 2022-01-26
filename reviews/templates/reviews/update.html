@@ -1,32 +1,36 @@
-{% extends 'base.html' %}
+{% extends 'user/base.html' %}
 {% block content %}
 
 <div class="jumbotron">
-  <div class="container">
-    <form method="post" action="{% url 'reviews:update' %}">
+    <div class="container">
+        <form method="post" action="{% url 'reviews:update' id=review.id %}" enctype="multipart/form-data">
       
-        {% csrf_token %}
-        <div class="form-group">
-        <label for="title">제목:</label>
-        <input type="text" class="form-control" name="title" 
-            id="title" value="{{ review.title }}">
+            {% csrf_token %}
+            <div class="form-group">
+            <label for="title">제목:</label>
+            <input type="text" class="form-control" name="title" 
+                id="title" value="{{ review.title }}">
+            </div>
 
-        <label for="store_name">식당명:</label>
-        <input type="text" class="form-control" name="store_name" 
-            id="store_name" value="{{ review.store_name }}">
-         </div>
+            <div class="form-group">
+            <label for="store_name">식당명:</label>
+            <input type="text" class="form-control" name="store_name" 
+                id="store_name" value="{{ review.store_name }}">
+            </div>
 
-        <div class="form-group">
-            <label for="content">내용:</label>
-        <textarea class="form-control" rows="10" name="content" 
-            id="content">{{ review.content }}</textarea>
-        </div>
+            <div class="form-group">
+            <label for="body">내용:</label>
+            <textarea class="form-control" rows="10" name="body" 
+                id="body">{{ review.body }}</textarea>
+            </div>
 
-        <button type="submit" id="complete" class="btn btn-primary btn-block">
-            수정
-        </button>
-    </form>
-  </div>
+            <div>
+                <input type = "file" name = "file">
+            </div>
+
+            <input type="submit" value="수정" class='btn btn-primary'>
+        </form>
+    </div>
 </div>
 
 {% endblock %}
