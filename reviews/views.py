@@ -14,10 +14,11 @@ def write(request):
             return render(request, 'reviews/write_fail.html')
 
         form = ReviewForm(request.POST, request.FILES)
+        user_id = request.session['user_id']
 
         if form.is_valid():
             review = form.save(commit=False)
-            review.member_id = User.objects.get(user_id = 'abcd')
+            review.member_id = User.objects.get(user_id = user_id)
             review.date = timezone.now()
 
             review.save()
@@ -43,21 +44,23 @@ def update(request, id):
     review = Review.objects.get(id=id)
 
     if request.method == 'POST':
-        title = request.POST.get('title')
-        store_name = request.POST.get('store_name')
-        body = request.POST.get('body')
-    
-        try:
-            review.title = title
-            review.store_name = store_name
-            review.body = body
+        form = ReviewForm(request.POST, request.FILES)
+        user_id = request.session['user_id']
+
+        if form.is_valid():
+            review.member_id = User.objects.get(user_id = user_id)
             review.date = timezone.now()
+            review.store_name = form.cleaned_data['store_name']
+            review.title = form.cleaned_data['title']
+            review.body = form.cleaned_data['body']
+            review.file = form.cleaned_data['file']
+
             review.save()
             return render(request, 'reviews/update_success.html')
-        
-        except:
-            return render(request, 'reviews/update_fail.html')
-
+    
+    else:
+        form = ReviewForm()
+    
     context = { 
         'review' : review 
     }
