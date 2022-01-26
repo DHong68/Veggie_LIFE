@@ -6,6 +6,7 @@ from .forms import SignupForm
 
 def home(request):
      return render(request, 'user/home.html')
+     
           
 def signup(request):
      if request.method == 'POST':
@@ -84,6 +85,3 @@ def update(request, user_id):
      else:
           form = SignupForm(instance=user)
      return render(request, 'user/update.html', {'form': form, 'user': user})
-
-
-     
