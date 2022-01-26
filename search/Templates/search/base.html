@@ -5,15 +5,8 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<<<<<<< HEAD
-        <meta name="description" content="" />
-        <meta name="author" content="" />
         <script src="{% static 'search/js/jquery.min.js' %}"></script>
         <script src="{% static 'search/js/popper.js' %}"></script>
-=======
-        <script src="{% static 'search/js/jquery.min.js' %}"></script>
-         <script src="{% static 'search/js/popper.js' %}"></script>
->>>>>>> ac99840a6c9b9e66de6e19e78bbb25d20a55f351
         <script src="{% static 'search/js/bootstrap.min.js' %}"></script>
         <script src="{% static 'search/js/main.js' %}"></script>
 
@@ -37,8 +30,8 @@
             <div class="container">
                 <ul id="nav1" class="nav justify-content-end ">
                 <li class="nav-item"><a class="navbar-brand" href="#!">VEGGIE LIFE</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">| VEGGIE RESTAURANTS</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">| REVIWES</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'store:search' %}">| VEGGIE RESTAURANTS</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'reviews:list' %}">| REVIWES</a></li>
                 </ul>
                 <ul id="nav2" class="nav justify-content-end ">
                     <li class="nav-item"><a class="nav-link" href="#!">SIGN UP</a></li>
