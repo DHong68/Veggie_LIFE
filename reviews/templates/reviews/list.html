@@ -2,7 +2,6 @@
 {% block content %}
 
 <form method="get" action="{% url 'reviews:list' %}">
-  {% comment %} {% csrf_token %} {% endcomment %}
   음식점 검색 : <input type="text" name="store_name">
   <input type="submit" value="검색">
 </form>
