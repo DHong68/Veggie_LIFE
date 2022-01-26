@@ -1,83 +1,65 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.utils import timezone
-from .models import Review
+
+from reviews.forms import ReviewForm
 from django.core.paginator import Paginator
 from user.models import User
 
-# Create your views here.
-# def write(request):
-#     if request.method == 'POST':
-#         title = request.POST.get('title')
-#         store_name = request.POST.get('store_name')
-#         body = request.POST.get('body')
+def write(request):
+    if request.method == 'POST':
+        if not request.session.get('user_id'):
+            return render(request, 'reviews/write_fail.html')
 
-#         try:
-#             user_id = request.session['user_id']
+        form = ReviewForm(request.POST, request.FILES)
 
-#             member = Member.objects.get(user_id=user_id)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.member_id = User.objects.get(user_id = 'abcd')
+            review.date = timezone.now()
 
-#             review = Review(title = title, store_name = store_name,
-#                 body = body, member = member)
-#             review.date = timezone
-#             review.save()
-#             return render(request, 'reviews/write_success.html')
+            review.save()
+            return render(request, 'reviews/write_success.html')
+    
+    else:
+        form = ReviewForm()
+
+    return render(request, 'reviews/write.html', { 'form':form })
+
+
+def delete(request, id):
+    try:
+        review = Review.objects.get(id=id)
+        review.delete()
+
+        return render(request, 'reviews/delete_success.html')
+    
+    except:
+        return render(request, 'reviews/delete_fail.html')
+
+def update(request, id):
+    review = Review.objects.get(id=id)
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        store_name = request.POST.get('store_name')
+        body = request.POST.get('body')
+    
+        try:
+            review.title = title
+            review.store_name = store_name
+            review.body = body
+            review.date = timezone.now()
+            review.save()
+            return render(request, 'reviews/update_success.html')
         
-#         except:
-#             return render(request, 'reviews/write_fail.html')
-    
-#     return render(request, 'reviews/write.html')
+        except:
+            return render(request, 'reviews/update_fail.html')
 
-# def upload(request):
-#     if request.method == 'POST':
-#         upload_files = request.FILES.getlist('file')
-
-#         result = ''
-#         for upload_file in upload_files:
-#             name = upload_file.name
-#             size = upload_file.size
-
-#             with open(name, 'wb') as file:
-#                 for chunk in upload_file.chunks():
-#                     file.write(chunk)
-#             result += '%s<br>%s<hr>' % (name, size)
-#         return HttpResponse(result)
-    
-#     return render(request, 'reviews/write.html')
-
-# def delete(request, id):
-#     try:
-#         # select * from article where id = ?
-#         review = Review.objects.get(id=id)
-#         review.delete()
-#         return render(request, 'delete_success.html')
-    
-#     except:
-#         return render(request, 'delete_fail.html')
-
-# def update(request, id):
-#     review = Review.objects.get(id=id)
-
-#     if request.method == 'POST':
-#         title = request.POST.get('title')
-#         store_name = request.POST.get('store_name')
-#         body = request.POST.get('body')
-    
-#         try:
-#             review.title = title
-#             review.store_name = store_name
-#             review.body = body
-#             review.save()
-#             return render(request, 'update_success.html')
-        
-#         except:
-#             return render(request, 'update_fail.html')
-
-#     context = { 
-#         'review' : review 
-#     }
-
-#     return render(request, 'update.html', context)
+    context = { 
+        'review' : review 
+    }
+    return render(request, 'reviews/update.html', context)
 
 def list(request):
 
