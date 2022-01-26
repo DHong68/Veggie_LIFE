@@ -1,57 +1,26 @@
-{% extends 'user/base.html' %}
+{% extends 'reviews/base.html' %}
 {% block content %}
 
-{% comment %} <div class="jumbotron">
-  <div class="container text-center">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>음식점 이름</th><th>제목</th><th>작성자</th><th>작성일자</th>
-        </tr>
-      </thead>
-      <body>
-        <hr>
-        {% for item in info %}
-          <tr>
-            <td>{{ item.store_name }}</td>
-            <td>{{ item.title }}</td>
-            <td>{{ item.member_id }}</td>
-            <td>{{ item.date }}</td>
-          </tr>
-        {% endfor %}
-
-        <div style='text-align:center;'>
-          <ul class='pagination'>
-            {% for i in page_range %}
-              <li>
-              <a href='{% url "reviews:list" %}?page={{ i }}'>
-                {{ i }}
-              </a>
-              </li>
-            {% endfor %}
-            </ul>
-          </div>
-
-      </body>
-    </table>
-  </div>
-</div> {% endcomment %}
-
-
+<form method="get" action="{% url 'reviews:list' %}">
+  {% comment %} {% csrf_token %} {% endcomment %}
+  페이지 : <input type="text" name="page">
+  음식점 검색 : <input type="text" name="store_name">
+  <input type="submit" value="검색">
+</form>
 
 <body style='margin:30px;'>
   <table class='table table-striped'>
   <tr>
-    <td>음식점 이름</td>
-    <td>제목</td>
     <td>작성자</td>
+    <td>제목</td>
+    <td>음식점 이름</td>
     <td>작성일자</td>
   </tr>
   {% for item in info %}
   <tr>
-    <td>{{ item.store_name }}</td>
+    <td>{{ item.member_id.user_id }}</td>
     <td>{{ item.title }}</td>
-    <td>{{ item.member_id }}</td>
+    <td>{{ item.store_name }}</td>
     <td>{{ item.date }}</td>
   </tr>
   {% endfor %}
@@ -71,34 +40,36 @@
     }
   </style>
 
+
   <div style='text-align:center;'>
     <ul class='pagination'>
+      <td>{{ store_name }}</td>
       {% if has_previous == 1 %}
-        <a href='{% url "reviews:list" %}?page={{ start_page | add:"-1" }}'>
+        <a href='{% url "reviews:list" %}?page={{ start_page | add:"-1" }}&?store_name={{ store_name }}'>
           {{ "[Prev]" }}
         </a>
       {% endif %}
       {% for i in page_range %}
+
         {% if i == now_page %}
-          <a href='{% url "reviews:list" %}?page={{ i }}' style="color: green">
+          <a href='{% url "reviews:list" %}?page={{ i }}&?store_name={{ store_name }}' style="color: green">
             {{ i }}
           </a>
         {%else %}
-          <a href='{% url "reviews:list" %}?page={{ i }}'>
+          <a href='{% url "reviews:list" %}?page={{ i }}&?store_name={{ store_name }}'>
             {{ i }}
           </a>
         {% endif %}
 
       {% endfor %}
       {% if has_next == 1  %}
-        <a href='{% url "reviews:list" %}?page={{ end_page | add:"+1" }}'>
+        <a href='{% url "reviews:list" %}?page={{ end_page | add:"+1" }}&?store_name={{ store_name }}'>
           {{ "[Next]" }}
         </a>
       {% endif %}
 
     </ul>
   </div>
-
 </body>
 
 {% endblock %}
