@@ -4,9 +4,8 @@ from .models import User
 from reviews.models import Review
 from .forms import SignupForm
 
-# def home(request):
-#      return render(request, 'user/home.html')
-
+def home(request):
+     return render(request, 'user/home.html')
           
 def signup(request):
      if request.method == 'POST':
@@ -86,10 +85,10 @@ def update(request, user_id):
           form = SignupForm(instance=user)
      return render(request, 'user/update.html', {'form': form, 'user': user})
 
-def home(request):
-     context = {}
-     if request.method == 'POST':
-          keyword = request.POST.get('keyword')
-          context['keyword'] = keyword
-     return render(request, 'search/search.html', context)
+# def home(request):
+#      context = {}
+#      if request.method == 'POST':
+#           keyword = request.POST.get('keyword')
+#           context['keyword'] = keyword
+#      return render(request, 'search/search.html', context)
      

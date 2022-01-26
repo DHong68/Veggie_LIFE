@@ -1,6 +1,6 @@
 {% extends "user/base.html"%}
 {%load static%}
-{% block content %}
+{% comment %} {% block content %}
 
 <form class="home" method="POST" action="{% url 'user:home' %}">
     {% csrf_token %}        
@@ -9,4 +9,4 @@
 </form>
 
 
-{% endblock %}
+{% endblock %} {% endcomment %}
