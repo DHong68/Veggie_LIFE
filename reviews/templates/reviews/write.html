@@ -1,38 +1,55 @@
-{% extends "user/base.html"%}
+{% extends 'user/base.html' %}
 {% block content %}
 
 <div class="jumbotron">
     <div class="container">
-        <form method="post" action="{% url 'reviews:write' %}"
-            enctype="multipart/form-data">
-
+        <form method="post" action="{% url 'reviews:write' %}" enctype="multipart/form-data">
+            
             {% csrf_token %}
             <div class="form-group">
-            <label for="title">제목:</label>
-            <input type="text" class="form-control" name="title" id="title">
-
-            <label for="store_name">식당명:</label>
-            <input type="text" class="form-control" name="store_name" id="store_name">
+                <label for="title">제목:</label>
+                <input type="text" class="form-control" name="title" id="title"
+                    value="{{ form.title.value | default_if_none:'' }}">
             </div>
             
+            {% if form.title.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{form.title.errors}}
+                </div>
+            {% endif %}
 
             <div class="form-group">
-            <label for="content">내용:</label>
-            <textarea class="form-control" rows="10" name="content" id="content"></textarea>
+                <label for="store_name">식당명:</label>
+                <input type="text" class="form-control" name="store_name" id="store_name"
+                    value="{{ form.store_name.value | default_if_none:'' }}">
             </div>
+
+            {% if form.store_name.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{form.store_name.errors}}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="body">내용:</label>
+                <textarea class="form-control" rows="7" name="body" id="body"
+                    value="{{ form.body.value | default_if_none:'' }}"></textarea>
+            </div>
+
+            {% if form.body.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{form.body.errors}}
+                </div>
+            {% endif %}
 
             <div>
-            <input type="file" name="file" multiple>
+                <input type = "file" name = "file">
             </div>
 
-            <button type="submit" id="complete" class="btn btn-primary btn-block">
-                등록
-            </button>
-            <button type="reset" id="cancel" class="btn btn-primary btn-block">
-                취소
-            </button>
+            <input type="submit" value="등록" class='btn btn-primary'>
+            <input type="reset" value="취소" class='btn btn-primary'>
         </form>
     </div>
-  </div>
+</div>
 
 {% endblock %}

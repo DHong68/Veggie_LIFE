@@ -4,6 +4,7 @@ from django.utils import timezone
 
 from reviews.forms import ReviewForm
 from django.core.paginator import Paginator
+from reviews.models import Review
 from user.models import User
 
 def write(request):
