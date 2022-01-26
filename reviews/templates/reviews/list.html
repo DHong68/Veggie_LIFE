@@ -17,11 +17,28 @@
 <div class="container" style="margin-bottom: 10px; margin-top:10px">
   <form method="GET" action="{% url 'reviews:list' %}" class="row g-2 justify-content-center">
 
-      <div id="store_name" class="col-md-5">
+ 
+      <div id="user_id" class="col-md-3">
+          {% if user_id %}
+              <input class="form-control" name="user_id" type="text" value="{{ user_id }}">
+          {% else %}
+              <input class="form-control" name="user_id" type="text" placeholder="제목 입력">
+          {% endif %}
+      </div> 
+
+      <div id="title" class="col-md-3">
+          {% if title %}
+              <input class="form-control" name="title" type="text" value="{{ title }}">
+          {% else %}
+              <input class="form-control" name="title" type="text" placeholder="제목 입력">
+          {% endif %}
+      </div> 
+
+      <div id="store_name" class="col-md-3">
           {% if store_name %}
               <input class="form-control" name="store_name" type="text" value="{{ store_name }}">
           {% else %}
-              <input class="form-control" name="store_name" type="text" placeholder="음식점을 입력하세요">
+              <input class="form-control" name="store_name" type="text" placeholder="음식점 입력">
           {% endif %}
       </div> 
 
@@ -57,25 +74,25 @@
     <div style='text-align:center;'>
       <ul class='pagination'>
         {% if has_previous %}
-          <a href='{% url "reviews:list" %}?page={{ start_page | add:"-1" }}&store_name={{ store_name }}'>
+          <a href='{% url "reviews:list" %}?page={{ start_page | add:"-1" }}&user_id={{ user_id }}&title={{ title }}&store_name={{ store_name }}'>
             {{ "[Prev]" }}
           </a>
         {% endif %}
 
         {% for i in page_range %}
           {% if i == now_page %}
-            <a href='{% url "reviews:list" %}?page={{ i }}&store_name={{ store_name }}' style="color: green">
+            <a href='{% url "reviews:list" %}?page={{ i }}&user_id={{ user_id }}&title={{ title }}&store_name={{ store_name }}' style="color: green">
               {{ i }}
             </a>
           {%else %}
-            <a href='{% url "reviews:list" %}?page={{ i }}&store_name={{ store_name }}'>
+            <a href='{% url "reviews:list" %}?page={{ i }}&user_id={{ user_id }}&title={{ title }}&store_name={{ store_name }}'>
               {{ i }}
             </a>
           {% endif %}
         {% endfor %}
         
         {% if has_next%}
-          <a href='{% url "reviews:list" %}?page={{ end_page | add:"+1" }}&store_name={{ store_name }}'>
+          <a href='{% url "reviews:list" %}?page={{ end_page | add:"+1" }}&user_id={{ user_id }}&store_name={{ store_name }}'>
             {{ "[Next]" }}
           </a>
         {% endif %}
@@ -85,10 +102,11 @@
   </body>
 </form>
 
-
-<form action="{% url 'reviews:write' %}">
-  <button>글쓰기</button>
-</form>
+<div style='text-align:center;'>
+  <form action="{% url 'reviews:write' %}" >
+    <button>글쓰기</button>
+  </form>
+</div>
 
 <script> 
   function getID(id) {

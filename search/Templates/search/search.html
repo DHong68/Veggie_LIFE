@@ -5,25 +5,20 @@
 <div class="container" id="searchbar2">              
  <!-- <form method=post action="/search/result/" target="_blank" > -->
   <div class="d-flex align-items-center" style="overflow: auto">
-    <form method="post" target="_blank">
     <table>     <tbody><tr>       <td>           
-        <input type="text" id="p" size="25">   
+        <input type="text" id="p" size="25" onkeyup="enterkey()">   
          <button type="button" onclick="view()">검색</button> 
           </td>    
          </tr>  
          <tr>
          </tr>
          </tbody></table>
-         </form>
          </div>   
         </div>
         <table class="table container " id="table"> 
              <tbody></tbody>
 </table>
 </div>
-
-
-
   <div class="modal fade" id="veganModal" tabindex="-1" role="dialog" aria-labelledby="veganModalLabel"  >
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
@@ -37,40 +32,20 @@
               <tr> <td>상품 사진</td>   <td> <img src="{% static 'search/img/vegan-food.png' %}" width="150rem" height="150rem"></td></tr> 	
             <tr> <td>첨가물</td>  <td name="mingri" id="mingri"></td></tr>	
             <tr> <td>  <i class="fas fa-leaf"></i> <i class="far fa-check-square"> </i> 
-              </td><td name="mtypes" id="mtypes"> </td></tr>	
-                  
+              </td><td name="mtypes" id="mtypes"> </td></tr>	               
        </tbody></table>
         <div class="modal-footer">
 	          <button type="button" class="btn btn-default" id="closebtn" data-dismiss="modal">닫기</button></div>
         </div>   
     </div></div>
     </div>      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
          <script>
          function view(){
             var pd=document.getElementById('p').value;
          const data =
              axios({
-         url: 'http://openapi.foodsafetykorea.go.kr/api/a93411c41a8541e19060/C002/json/1/11/PRDLST_NM='+pd,
+         url: 'http://openapi.foodsafetykorea.go.kr/api/a93411c41a8541e19060/C002/json/1/30/PRDLST_NM='+pd,
          method: 'get',
         
         });
@@ -118,64 +93,89 @@
             $('#mcp').text(cp);
             $("#mpd").text(pd);	
             $("#mingri").text(ingri);	
-            //1. 첨가물 
+           // 1. 첨가물 
             var count = ingri.split(',').length - 1;
             //2. 첨가물 배열  
              var ingriarray=ingri.split(',');
-             var bt=['다다'];
+             var bt=['페스코','락토','락토오보','비건'];
                 //계란 
             var eggs=['전란액','난황액','난백액','난백분','전란분','피단','알부민','계란흰자'];
                 //생선  
-            var fish=['냉동연육','돔연육','부레풀','오징어','새우'];
+            var fish=['냉동연육','돔연육','부레풀','오징어','새우','달고기','오징어젓갈무침','조미건어포류'];
                 //우유 
             var mlik=['우유', '산양유', '전지분유',  '가당연유', '무당연유', '전지연유', '탈지연유','버터유', '농축유류', '유크림류', '버터류', 
              '치즈류', '분유류', '유청류', '유당', '유단백가수분해식품', '유함유가공품'];
                 //고기
-            var meat=['소시지','젤라틴','펩신','소고기','돼지고기','오리고기','비프분말']                
-                var vegan=['벌꿀','사양벌꿀']
+            var meat=['소시지','젤라틴','펩신','소고기','돼지고기','오리고기','비프분말','돼지뼈다귀']                
+            var vegan=['벌꿀','사양벌꿀']
                 //비건 -- 완전 채식
                 //계란 우유 ok-락토 오보
                 //락토--우유 ok
-                //생선 달걀 우유 ok ->페스코		 
-           
-                // Loop1 : for(i=0;i<count;i++){
-                //     for(var j=0;j<meat.length;i++){
-                //         if(ingriarray[i]==meat[j]){ //고기
-                //             bt=[];
-                //             break  Loop1;
-                //             } 
-                //         } 
+                //생선 달걀 우유 ok ->페스코
+            var check=false;		 
+            for(i=0;i<count;i++){
+                for(var j=0;j<meat.length;j++){
+                    if(ingriarray[i]==meat[j]){ //고기            
+                        check=true;     
+                        bt=['X']
+                        break; 
+                        }
+                    }
+                };
+            if(check!=true){
+                for(i=0;i<count;i++){
+                    for(var f=0;f<fish.length;f++){
+                         if(ingriarray[i]==fish[f]) {//생선            
+                            bt.pop('비건')
+                            bt.pop('락토')
+                            bt.pop('락토 오보')
+                            check=true;
+                            break; 
+                        }
+                    }
+                }
+            };
+            if(check!=true){
+                for(var t=0;t<count;t++){
+                      for(var m=0;f<mlik.length;m++){
+                            if(ingriarray[t]==mlik[m]) {            
+                                bt.pop('비건')
+                                console.log(mlik[m])
+                                check=true;
+                                break; 
+                            }
+                    }
+                }
+            };
 
-                //      for(var p=0;p<fish.length;p++){// 페스코
-                //          if(ingriarray[i]==fish[p]){
-                //              bt=['pesco']
-                //              break Loop1;
-                //               }                            
-                //          }
-                //          //ovo
-                //       for(var o=0;o<eggs.length;o++){//
-                //          if(ingriarray[i]==eggs[o]){
-                //             bt=['pesco','lacto']
-                //              break Loop1;;
-                //         }
+        
+                
+                $("#mtypes").text(bt);
 
-                //      }
-                //        //lacto
-                //      for(var l=0;l<mlik.length;l++){// 페스코
-                //          if(ingriarray[i]==mlik[l]){
-                //              bt=['pesco','lacto','lactoovo']; //우유 먹는애들이 락토, 락토 오보
-                //              break Loop1;
-                //              }                             
-                //             }
-
-
-
-
-                //     };
-                //     console.log(vt)
-           
-           
             });
+
+
+            //
+            function enterkey() {
+        if (window.event.keyCode == 13) {
+            view()
+        }
+    }
+ 
+
+
+
+            
+
+                 
+                
+               
+
+
+
+           
+           
+           
                 
                
                 
