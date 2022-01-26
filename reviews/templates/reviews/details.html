@@ -1,4 +1,4 @@
-{% extends 'reviews/base.html' %}
+{% extends 'user/base.html' %}
 {% block content %}
 
 <body style='margin:30px;'>
@@ -19,9 +19,18 @@
     <tr>
     </table>
 
-    <h1>게시글 내용</h1>
     <hr>
     {{ review.body }}
+    {{ review.file }}
+
+    {% if is_logined %}
+        <form action="update/{{id}}/">
+            <button>수정</button>
+        </form>
+        <form action="delete/{{id}}/">
+            <button>삭제</button>
+        </form>
+    {% endif %}
 
 
 

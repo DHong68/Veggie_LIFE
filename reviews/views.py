@@ -110,9 +110,15 @@ def details(request):
     id = request.GET.get('id')
     review = Review.objects.get(id=id)
 
+    is_logined = False
+    if review.member_id is not None:
+        if request.session['user_id'] == review.member_id.user_id:
+            is_logined = True
+
     context = {
         'id' : id,
         'review' : review,
+        'is_logined' : is_logined
     }
     return render(request, 'reviews/details.html', context)
 
