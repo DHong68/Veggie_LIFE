@@ -34,6 +34,7 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:logout' %}">LOGOUT</a></li>
                         {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'user:delete' %}">탈퇴</a></li> {% endcomment %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:mypage' %}">MY PAGE</a></li>
+                        {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'user:mypage' user_id=user.user_id %}">MY PAGE</a></li> {% endcomment %}
                     {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:login' %}">LOGIN</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:signup' %}">SIGN UP</a></li>
