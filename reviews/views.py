@@ -45,9 +45,10 @@ def update(request, id):
 
     if request.method == 'POST':
         form = ReviewForm(request.POST, request.FILES)
+        user_id = request.session['user_id']
 
         if form.is_valid():
-            review.member_id = User.objects.get(user_id = 'abcd')
+            review.member_id = User.objects.get(user_id = user_id)
             review.date = timezone.now()
             review.store_name = form.cleaned_data['store_name']
             review.title = form.cleaned_data['title']
