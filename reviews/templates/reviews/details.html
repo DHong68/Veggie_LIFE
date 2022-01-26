@@ -41,8 +41,9 @@
 
 
     <br>
-    <img src='{{ review.file.url }}' width='20%'>
-
+    {% if review.file %}
+        <img src='{{ review.file.url }}' width='20%'>
+    {% endif %}
     <br>
     <br>
     {% if is_logined %}
