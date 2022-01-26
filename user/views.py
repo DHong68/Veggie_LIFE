@@ -5,7 +5,14 @@ from reviews.models import Review
 from .forms import SignupForm
 
 def home(request):
-     return render(request, 'user/home.html')
+     user_id = request.session.get('user_id')
+     if user_id:
+          user = User.objects.get(user_id = user_id)
+          context = {}
+          context['user'] = user
+          return render(request, 'user/home.html', context)
+     else:
+          return render(request, 'user/home.html')
      
           
 def signup(request):

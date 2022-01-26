@@ -33,7 +33,7 @@
                     {% if request.session.user_id %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:logout' %}">LOGOUT</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:delete' %}">WITHDRAWL</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'user:mypage' %}">{{ user.name }}({{ user.veg_type }})🌱</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'user:mypage' %}">{{ user.name }} ({{ user.veg_type }}) 🌱</a></li>
                     {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:login' %}">LOGIN</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:signup' %}">SIGN UP</a></li>
