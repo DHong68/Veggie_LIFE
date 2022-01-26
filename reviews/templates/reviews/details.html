@@ -13,22 +13,46 @@
     <tr>
     <td>{{ review.id }}</td>
     <td>{{ review.member_id.user_id }}</td>
-    <td>{{ review.title }}</td>
-    <td>{{ review.store_name }}</td>
     <td>{{ review.date }}</td>
     <tr>
     </table>
 
     <hr>
-    {{ review.body }}
-    {{ review.file }}
+   
+    
+    
 
+    <label for="title">게시글 번호:</label>
+        <input type="text" class="form-control" name="id" 
+            id="id" value="{{ review.id }}">
+    <label for="title">작성자:</label>
+        <input type="text" class="form-control" name="member_id" 
+            id="member_id" value="{{ review.member_id.user_id }}">
+    <label for="title">제목:</label>
+        <input type="text" class="form-control" name="title" 
+            id="title" value="{{ review.title }}">
+    <label for="title">음식점 이름:</label>
+        <input type="text" class="form-control" name="store_name" 
+            id="store_name" value="{{ review.store_name }}">
+
+    <label for="body">내용:</label>
+        <input type="text" class="form-control" name="body" 
+            id="body" value="{{ review.body }}">
+
+
+    <br>
+    <img src='{{ review.file.url }}' width='20%'>
+
+    <br>
+    <br>
     {% if is_logined %}
-        <form action="update/{{id}}/">
-            <button>수정</button>
+
+        <form action="{% url 'reviews:update' id=id %}">
+            <button class='btn btn-primary'>수정</button>
         </form>
-        <form action="delete/{{id}}/">
-            <button>삭제</button>
+        <br>
+        <form action="{% url 'reviews:delete' id=id %}">
+            <button class='btn btn-primary'>삭제</button>
         </form>
     {% endif %}
 
