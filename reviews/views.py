@@ -55,6 +55,12 @@ def update(request, id):
     context={}
     review = Review.objects.get(id=id)
     
+    context = {}
+    if if_session(request):
+        context['user_session_id'], context['user_session_veg_type'] = if_session(request)
+        print(context['user_session_id'], context['user_session_veg_type'])
+
+
     if request.method == 'POST':
         if not request.session.get('user_id'):
             return render(request, 'reviews/update_fail.html')
@@ -71,20 +77,22 @@ def update(request, id):
             review.file = form.cleaned_data['file']
 
             review.save()
-            return render(request, 'reviews/update_success.html')
+            return render(request, 'reviews/update_success.html', context)
     
     else:
         form = ReviewForm()
     
+    
     context['form'] = form
     context['review'] = review
+    
     return render(request, 'reviews/update.html', context)
 
 
 
 def list(request):
 
-    review_list = Review.objects.order_by('-date')
+    review_list = Review.objects.order_by('-id')
 
 
     user_id = request.GET.get('user_id', '')
