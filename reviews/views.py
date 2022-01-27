@@ -54,6 +54,12 @@ def delete(request, id):
 def update(request, id):
     review = Review.objects.get(id=id)
     
+    context = {}
+    if if_session(request):
+        context['user_session_id'], context['user_session_veg_type'] = if_session(request)
+        print(context['user_session_id'], context['user_session_veg_type'])
+
+
     if request.method == 'POST':
         form = ReviewForm(request.POST, request.FILES)
         user_id = request.session['user_id']
@@ -67,14 +73,13 @@ def update(request, id):
             review.file = form.cleaned_data['file']
 
             review.save()
-            return render(request, 'reviews/update_success.html')
+            return render(request, 'reviews/update_success.html', context)
     
     else:
         form = ReviewForm()
     
-    context = { 
-        'review' : review 
-    }
+    context['review'] = review 
+
     return render(request, 'reviews/update.html', context)
 
 
