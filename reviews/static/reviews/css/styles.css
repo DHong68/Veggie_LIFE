@@ -70,18 +70,6 @@
   box-sizing: border-box;
 }
 
-
-@font-face {
-    font-family: 'S-CoreDream-3Light';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-
-
-
-
 @media (prefers-reduced-motion: no-preference) {
   :root {
     scroll-behavior: smooth;
@@ -104,65 +92,6 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-
- 
-  html, body {
-    margin: 0;
-    padding: 0;
-  }
-  
-  #wrap {
-    min-height: 100vh;
-    position: relative;
-    width: 100%; 
-    background-color: #f2f2f2;
-  }
-  
-  section {
-    padding-bottom: 105px;
-  }
-  
-  footer {
-    width: 100%;
-    height: 40px;
-    bottom: 0px;
-    position: absolute;
-    padding-top: 4px;
-    font-size: 12px;
-  }
-  
-  footer a {
-    display: inline-block;
-    margin: 0 20px 10px 20px;
-    color: #808080; font-size: 11px;
-  }
-  
-  footer a:visited {
-    color: #808080;
-  }
-  
-  footer p {
-    margin-top: 0; margin-bottom: 0;   
-  }
-  
-  footer p span {
-    display: inline-block;
-    margin-left: 20px;
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 
 hr {
   margin: 1rem 0;
@@ -11383,9 +11312,5 @@ footer.footer {
   padding-bottom: 4rem;
   /* padding-bottom: 0rem;
   padding-top: 0rem; */
-
-
-
-
 }
 

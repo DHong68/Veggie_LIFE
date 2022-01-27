@@ -44,7 +44,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'user','store','reviews','search',
+    'user','store','reviews','search','config',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -165,7 +165,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-          os.path.join(BASE_DIR, 'static','user','reviews','store','search'),]
+          os.path.join(BASE_DIR, 'static','user','reviews','store','search','config'),]
 
 STATIC_ROOT= os.path.join(BASE_DIR,'static')
 

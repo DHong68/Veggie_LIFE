@@ -3,14 +3,15 @@
 {% block content %}
 <div style="position : relative;display: flex;justify-content:center;align-items: center;text-align: center; margin:70px 0 0 0">
 <div class="login-page" style="display: flex;justify-content: center;align-items: center; opacity:0.7; border: 3px solid #FFFFFF;border-radius: 7px;padding:15px; box-shadow:3px gray">
-
+    {% comment %} {{ form.instance }} {% endcomment %}
     <div class="form" style="text-align: center;">
-
         <strong style="font-size:30px;color:white">UPDATE INFORMATION</strong>
         
         <hr style="background-color:#FFFFFF; border: 0; height: 3px;">
 
-        <form action="{% url 'user:update' user_id=user.user_id %}" method="post">
+        {% comment %} <form action="{% url 'user:update' user_id=user.user_id %}" method="post"> {% endcomment %}
+        {% comment %} <form action="{% url 'user:update' user.user_id %}" method="post"> {% endcomment %}
+        <form action="{{ user.user_id }}" method="post" instance = "{{ user }}">
             
             {% csrf_token %}
             
@@ -32,8 +33,8 @@
             {% endif %}
             <tr>
                 <td>
-                    <input type="text" name="user_id" placeholder="ID"  required size="15" maxlength="30" id="user_id" style="width:25;height:15;font-size:25px;margin: 8px;border: 2px solid #FFFFFF;border-radius: 7px;">
-                    <input type="text" name="name" placeholder="Name"  required size="15" maxlength="50" id="name" style="width:25;height:15;font-size:25px;margin: 8px;border: 2px solid #FFFFFF;border-radius: 7px;">
+                    <input type="text" value="{{ form.instance.user_id }}" name="user_id" placeholder="ID"  required size="15" maxlength="30" id="user_id" style="width:25;height:15;font-size:25px;margin: 8px;border: 2px solid #FFFFFF;border-radius: 7px;">
+                    <input type="text" value="{{ form.instance.name }}" name="name" placeholder="Name"  required size="15" maxlength="50" id="name" style="width:25;height:15;font-size:25px;margin: 8px;border: 2px solid #FFFFFF;border-radius: 7px;">
                 </td>
             </tr>
             <tr>
@@ -44,16 +45,16 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" name="email" placeholder="Email"  required size="33.7" maxlength="50" id="email" style="width:25;height:15;font-size:25px;margin: 8px;border: 2px solid #FFFFFF;border-radius: 7px;">
+                    <input type="text" value="{{ form.instance.email }}" name="email" placeholder="Email"  required size="33.7" maxlength="50" id="email" style="width:25;height:15;font-size:25px;margin: 8px;border: 2px solid #FFFFFF;border-radius: 7px;">
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="text" name="veg_type" placeholder="Vegan Type"  required size="20" maxlength="30" id="veg_type" style="width:25;height:15;font-size:25px;margin: 8px 0;border: 2px solid #FFFFFF;border-radius: 7px;">
+                    <input type="text" value="{{ form.instance.veg_type }}" name="veg_type" placeholder="Vegan Type"  required size="20" maxlength="30" id="veg_type" style="width:25;height:15;font-size:25px;margin: 8px 0;border: 2px solid #FFFFFF;border-radius: 7px;">
                 </td>
             </tr>
             </table>
-            <input type="submit" value="Sing UP" style="width:100; height:15; color : white; font-size:25px;background-color: #c5e0b4;border: 2px solid #FFFFFF;border-radius: 7px;margin: 8px 0;border: 2px solid #FFFFFF;border-radius: 7px;">
+            <input type="submit" value="UPDATE" style="width:100; height:15; color : white; font-size:25px;background-color: #c5e0b4;border: 2px solid #FFFFFF;border-radius: 7px;margin: 8px 0;border: 2px solid #FFFFFF;border-radius: 7px;">
             </form>
 
     </div>
