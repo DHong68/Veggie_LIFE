@@ -13,7 +13,6 @@ def write(request):
     context = {}
     if if_session(request):
         context['user_session_id'], context['user_session_veg_type'] = if_session(request)
-        print(context['user_session_id'], context['user_session_veg_type'])
 
     if request.method == 'POST':
         if not request.session.get('user_id'):
@@ -40,7 +39,6 @@ def delete(request, id):
     context = {}
     if if_session(request):
         context['user_session_id'], context['user_session_veg_type'] = if_session(request)
-        print(context['user_session_id'], context['user_session_veg_type'])
     try:
         review = Review.objects.get(id=id)
         review.delete()
@@ -58,7 +56,6 @@ def update(request, id):
     context = {}
     if if_session(request):
         context['user_session_id'], context['user_session_veg_type'] = if_session(request)
-        print(context['user_session_id'], context['user_session_veg_type'])
 
 
     if request.method == 'POST':
@@ -142,7 +139,6 @@ def list(request):
     
     if if_session(request):
         context['user_session_id'], context['user_session_veg_type'] = if_session(request)
-        print(context['user_session_id'], context['user_session_veg_type'])
 
     return render(
         request, 'reviews/list.html', context)
@@ -167,7 +163,7 @@ def details(request):
 
     if if_session(request):
         context['user_session_id'], context['user_session_veg_type'] = if_session(request)
-        print(context['user_session_id'], context['user_session_veg_type'])
+        
     return render(request, 'reviews/details.html', context)
 
 
