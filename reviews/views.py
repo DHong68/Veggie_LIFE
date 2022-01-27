@@ -52,9 +52,13 @@ def delete(request, id):
 
 # 세션 추가
 def update(request, id):
+    context={}
     review = Review.objects.get(id=id)
     
     if request.method == 'POST':
+        if not request.session.get('user_id'):
+            return render(request, 'reviews/update_fail.html')
+
         form = ReviewForm(request.POST, request.FILES)
         user_id = request.session['user_id']
 
@@ -72,9 +76,8 @@ def update(request, id):
     else:
         form = ReviewForm()
     
-    context = { 
-        'review' : review 
-    }
+    context['form'] = form
+    context['review'] = review
     return render(request, 'reviews/update.html', context)
 
 
