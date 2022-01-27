@@ -116,7 +116,7 @@ html,body{
 
   
   .wrapper{ 
-      display: flex; min-height: 100vh; flex-direction: column; 
+      display: flex; min-height: 100%; flex-direction: column; 
     }
 
 
@@ -11352,16 +11352,11 @@ textarea.form-control-lg {
 }
 
 
-footer.footer {
+/* footer.footer {
   color: white;
   background-color: #c5e0b4;
   padding-top: 2rem;
   padding-bottom: 4rem;
   /* padding-bottom: 0rem;
   padding-top: 0rem; */
-
-
-
-
-}
 

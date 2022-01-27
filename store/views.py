@@ -1,7 +1,15 @@
+from audioop import add
+from modulefinder import STORE_GLOBAL
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.db.models import Q
 from django.core.paginator import Paginator
+
+from os import path
+from django.core.exceptions import ImproperlyConfigured
+import json
+
+from isort import file
 
 from .models import Store
 #
@@ -118,7 +126,8 @@ def search(request):
         'gu': gu,
         'type': type,
         'key': key, 
-        'all': all
+        'all': all, 
+        "cur_page": cur_page
     }
     if if_session(request):
         context['user_session_id'], context['user_session_veg_type'] = if_session(request)
@@ -131,6 +140,7 @@ def search(request):
 
 def details(request):
     store_name = request.GET.get('store')
+<<<<<<< HEAD
     store = Store.objects.filter(name=store_name)
     context = {
         'store': store
@@ -139,3 +149,26 @@ def details(request):
         context['user_session_id'], context['user_session_veg_type'] = if_session(request)
 
     return render(request, 'store/details.html', context)
+=======
+    store = Store.objects.get(name=store_name)
+
+    file_path = path.abspath(__file__)
+    dir_path = path.dirname(file_path)
+    key_path = path.join(dir_path, 'key.json')
+
+    with open(key_path) as f:
+        secret_key = json.loads(f.read())
+
+    def get_secret(setting):
+        try:
+            return secret_key[setting]
+        except KeyError:
+            error_msg = "Set the {} environment variable".format(setting)
+            raise ImproperlyConfigured(error_msg)
+
+
+    SECRET_KEY = get_secret("GOOGLE_MAP_KEY")
+    google_map_src = "https://maps.googleapis.com/maps/api/js?key=" + SECRET_KEY + "&callback=initMap"
+
+    return render(request, 'store/details.html', {"store": store, "google_map_src": google_map_src})
+>>>>>>> 6eae5eaa95c3f8803a7084ba55c02a4ef2aa5394

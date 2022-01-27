@@ -300,53 +300,84 @@ width: 768px;
             $("#mingri").text(ingri);	
            // 1. 첨가물 
            console.log(ingri)
-            var count = ingri.split(',').length - 1;
+            var count = ingri.split(',').length;
             //2. 첨가물 배열  
              var ingriarray=ingri.split(',');
-             var bt=['페스코','락토','락토오보','비건'];
+             
+             var vt=['페스코','락토오보','락토','비건'];
                 //계란 
             var eggs=['전란액','난황액','난백액','난백분','전란분','피단','알부민','계란흰자'];
                 //생선  
-            var fish=['냉동연육','돔연육','부레풀','오징어','새우','달고기','오징어젓갈무침','조미건어포류'];
+            var fish=['냉동연육','까지가자미','가자미살','가자미','돔연육','부레풀','오징어','새우','달고기','오징어젓갈무침','조미건어포류','조미건어포류'];
                 //우유 
             var mlik=['우유', '산양유', '전지분유',  '가당연유', '무당연유', '전지연유', '탈지연유','버터유', '농축유류', '유크림류', '버터류', 
-             '치즈류', '분유류', '유청류', '유당', '유단백가수분해식품', '유함유가공품'];
+             '치즈류', '분유류', '유청류', '유당', '유단백가수분해식품', '유함유가공품','연유'];
                 //고기
-            var meat=['소시지','젤라틴','펩신','소고기','돼지고기','오리고기','비프분말','돼지뼈다귀']                
+            var meat=['소시지','햄','젤라틴','펩신','소고기','돼지고기','오리고기','비프분말','돼지뼈다귀','쇠고기혼합분말']                
             var vegan=['벌꿀','사양벌꿀']
-            var excl=['원재료미등록']
+            var excl=['원재료미등록','복합조미식품']
                 //비건 -- 완전 채식
                 //계란 우유 ok-락토 오보
                 //락토--우유 ok
                 //생선 달걀 우유 ok ->페스코
-            var check=false;		 
+            console.log(ingriarray);
+            console.log(fish)
+            console.log(count)
+
+        
+
+            var check=false;	
+            
+            for(i=0;i<count;i++){
+                for(var j=0;j<excl.length;j++){
+                    if(ingriarray[i]==excl[j]){ //고기            
+                        check=true;     
+                        console.log(ingriarray[i]);
+                        console.log(excl[j]);
+                        vt=['데이터가 더 필요합니다...']
+                        break; 
+                        }
+                    }
+                }
+
+
+
+
+            if(check!=true){	 
             for(i=0;i<count;i++){
                 for(var j=0;j<meat.length;j++){
                     if(ingriarray[i]==meat[j]){ //고기            
                         check=true;     
-                        bt=['X']
+                        console.log(ingriarray[i]);
+                        console.log(meat[j]);
+                        vt=['X']
                         break; 
                         }
                     }
-                };
-            if(check!=true){
-                for(i=0;i<count;i++){
-                    for(var f=0;f<fish.length;f++){
-                         if(ingriarray[i]==fish[f]) {//생선            
-                            bt.pop('비건')
-                            bt.pop('락토')
-                            bt.pop('락토 오보')
-                            check=true;
-                            break; 
-                        }
+                }
+            }    
+
+                if(check!=true){
+                     for(i=0;i<count;i++){
+                        for(var j=0;j<fish.length;j++){
+                                if(ingriarray[i]==fish[j]){           
+                                    check=true;     
+                                    console.log(ingriarray[i]);
+                                    console.log(fish[j]);
+                                    vt=['페스코'];
+                                    break; 
+                                        }
                     }
                 }
+            
             };
+                
+
             if(check!=true){
                 for(var t=0;t<count;t++){
-                      for(var m=0;f<mlik.length;m++){
+                      for(var m=0;m<mlik.length;m++){
                             if(ingriarray[t]==mlik[m]) {            
-                                bt.pop('비건')
+                                vt=['페스코','락토오보'];
                                 console.log(mlik[m])
                                 check=true;
                                 break; 
@@ -355,9 +386,42 @@ width: 768px;
                 }
             };
 
+            if(check!=true){
+                     for(i=0;i<count;i++){
+                        for(var j=0;j<eggs.length;j++){
+                                if(ingriarray[i]==eggs[j]){           
+                                    check=true;     
+                                    console.log(ingriarray[i]);
+                                    console.log(eggs[j]);
+                                    vt=['페스코','락토오보'];
+                                    break; 
+                                        }
+                    }
+                }
+            
+            };
+
+            if(check!=true){
+                     for(i=0;i<count;i++){
+                        for(var j=0;j<vegan.length;j++){
+                                if(ingriarray[i]==vegan[j]){           
+                                    check=true;     
+                                    console.log(ingriarray[i]);
+                                    console.log(vegan[j]);
+                                    vt=['페스코','락토오보','락토'];
+                                    break; 
+                                        }
+                    }
+                }
+            
+            };
+
+
+
+
+            
         
-                console.log(vt)
-                $("#mtypes").text(bt);
+                $("#mtypes").text(vt);
 
             });
 

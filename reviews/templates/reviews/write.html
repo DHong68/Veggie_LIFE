@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="jumbotron">
-    <div class="container" style="background-color:#98C138; color:white; border-radius:10px; padding-bottom:60px; margin-top:30px;">
+    <div class="container" style="background-color:#ABE0A1; color:white; border-radius:10px; padding-bottom:60px; margin-top:30px;">
         <form method="post" action="{% url 'reviews:write' %}" enctype="multipart/form-data">
             
             {% csrf_token %}
@@ -45,7 +45,7 @@
 
             <div style="margin:20px 20px 20px 0px;">
                 <label for="file" style="font-size:120%; margin-right:10px">첨부 사진</label>
-                <input type = "file" id = "file">
+                <input type = "file" name = "file">
             </div>
 
             <div style="float:right;">

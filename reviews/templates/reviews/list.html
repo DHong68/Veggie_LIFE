@@ -1,18 +1,6 @@
 {% extends 'user/base2.html' %}
 {% block content %}
 
-<style>
-  .pagination {
-    display: inline-block;
-  }
-  
-  .pagination a {
-    color: white;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-  }
-</style>
 
 <div class="container" style="margin-bottom: 10px; margin-top:10px">
   <form method="GET" action="{% url 'reviews:list' %}" class="row g-2 justify-content-center">
@@ -49,27 +37,50 @@
   </form>
 </div>
 
+<style>
+  .pagination {
+    display: inline-block;
+  }
+  
+  .pagination a {
+    color: white;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  #res_name {
+    cursor: pointer;
+  }
+</style>
+
 <form id='fm' method="GET" action="{% url 'reviews:details' %}">
   <body style='margin:30px; overflow:scroll'>
-    <table class='table table-striped'>
+    <table class='table table-hover'>
+      <colgroup>
+        <col width="100px">
+        <col width="150px">
+        <col width="200px">
+        <col width="200px">
+        <col width="200px">
+    </colgroup>
     <tr>
-      <td>게시글 번호</td>
-      <td>작성자</td>
-      <td>제목</td>
-      <td>음식점 이름</td>
-      <td>작성일자</td>
+      <th scope="col" style='text-align:center;'>게시글 번호</th>
+      <th scope="col" style='text-align:center;'>작성자</th>
+      <th scope="col" style='text-align:center;'>제목</th>
+      <th scope="col" style='text-align:center;'>음식점 이름</th>
+      <th scope="col" style='text-align:center;'>작성일자</th>
     </tr>
     {% for item in info %}
     <tr>
-      <td name="item.id"><p onclick="getID('{{ item.id }}')">{{ item.id }}</p></td>
+      <td id="res_name" name="item.id" style='text-align:center;'><p onclick="getID('{{ item.id }}')">{{ item.id }}</p></td>
       {% if item.member_id is not None %}
-        <td name="item.member_id.user_id"><p onclick="getID('{{ item.id }}')">{{ item.member_id.user_id }}</p></td>
+        <td id="res_name" name="item.member_id.user_id" style='text-align:center;'><p onclick="getID('{{ item.id }}')">{{ item.member_id.user_id }}</p></td>
       {% else %}
-        <td name="item.member_id.user_id"><p onclick="getID('{{ item.id }}')">(알 수 없음)</p></td>
+        <td id="res_name" name="item.member_id.user_id" style='text-align:center;'><p onclick="getID('{{ item.id }}')">(알 수 없음)</p></td>
       {% endif %}
-      <td name="item.title"><p onclick="getID('{{ item.id }}')">{{ item.title }}</p></td>
-      <td name="item.store_name"><p onclick="getID('{{ item.id }}')">{{ item.store_name }}</p></td>
-      <td name="item.date"><p onclick="getID('{{ item.id }}')">{{ item.date }}</p></td>
+      <td id="res_name" name="item.title" style='text-align:center;'><p onclick="getID('{{ item.id }}')">{{ item.title }}</p></td>
+      <td id="res_name" name="item.store_name" style='text-align:center;'><p onclick="getID('{{ item.id }}')">{{ item.store_name }}</p></td>
+      <td id="res_name" name="item.date" style='text-align:center;'><p onclick="getID('{{ item.id }}')">{{ item.date }}</p></td>
     </tr>
     {% endfor %}
     </table>
