@@ -2,6 +2,20 @@
 {% block content %}
 
 <style>
+  .pagination {
+    display: inline-block;
+  }
+  
+  .pagination a {
+    color: white;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  #res_name {
+    cursor: pointer;
+  }
+
   #list {
       font-family: 'S-CoreDream-4Regular';
   }
@@ -41,22 +55,6 @@
 
   </form>
 </div>
-
-<style>
-  .pagination {
-    display: inline-block;
-  }
-  
-  .pagination a {
-    color: white;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-  }
-  #res_name {
-    cursor: pointer;
-  }
-</style>
 
 <div class="container" id="list">
 <form id='fm' method="GET" action="{% url 'reviews:details' %}">

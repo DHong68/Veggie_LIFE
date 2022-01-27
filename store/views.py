@@ -9,51 +9,6 @@ import json
 from .models import Store
 from user.views import if_session
 
-def show(request):
-
-    stores = Store.objects.exclude(name='상호명').order_by('name')
-
-    # set current page - initialize it as 1
-    try:
-        cur_page = int(request.GET.get('page'))
-    except TypeError:
-        cur_page = 1
-    
-    # pagination
-    p = Paginator(stores, 10)
-    info = p.page(cur_page)
-
-    start_page = ((cur_page-1) // 10) * 10 + 1
-    end_page = start_page + 9 
-
-    if end_page > p.num_pages:
-        end_page = p.num_pages
-
-    # prev, next page
-    is_prev = False
-    is_next = False
-    if start_page > 1:
-        is_prev = True
-    if end_page < p.num_pages:
-        is_next = True
-
-    context = {
-        'stores': info,
-        'page_range': range(start_page, end_page+1), 
-        'is_prev': is_prev, 
-        'is_next': is_next, 
-        'start_page': start_page, 
-        'end_page': end_page
-    }
-
-    if if_session(request):
-        context['user_session_id'], context['user_session_veg_type'] = if_session(request)
-
-    return render(
-        request, 'store/show_results.html', 
-        context
-    )
-
 
 def search(request):
     stores = Store.objects.exclude(name='상호명').order_by('name')
@@ -121,8 +76,11 @@ def search(request):
         'key': key,
         "cur_page": cur_page
     }
+
     if if_session(request):
         context['user_session_id'], context['user_session_veg_type'] = if_session(request)
+        print(context['user_session_id'], context['user_session_veg_type'])
+
 
     return render(
         request, 'store/search.html', 
@@ -152,4 +110,13 @@ def details(request):
     SECRET_KEY = get_secret("GOOGLE_MAP_KEY")
     google_map_src = "https://maps.googleapis.com/maps/api/js?key=" + SECRET_KEY + "&callback=initMap"
 
-    return render(request, 'store/details.html', {"store": store, "google_map_src": google_map_src})
+    context = {
+        "store": store, 
+        "google_map_src": google_map_src
+        }
+
+    if if_session(request):
+        context['user_session_id'], context['user_session_veg_type'] = if_session(request)
+        print(context['user_session_id'], context['user_session_veg_type'])
+    
+    return render(request, 'store/details.html', context)
