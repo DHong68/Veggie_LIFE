@@ -13,7 +13,7 @@
             
                 <tr>
                     <td>
-                        <input type="text"  placeholder="음식을 검색하세요"  autocomplete="off"  id="p" size="25" onkeyup="enterkey()   "> </td>
+                        <input type="text"  placeholder="음식을 검색하세요"  autocomplete="off"  id="p" size="25" onkeyup="enterkey()"> </td>
                        <td><button type="button" onclick="view()" id="btnS">검색</button> </td>
                     </td>
                 </tr>
@@ -36,10 +36,6 @@
     <tbody>  
     </tbody>
 </table>
-</div>
-
-
-
 
 <!--  -->
 
@@ -70,11 +66,7 @@ width: 768px;
     text-align: center;
 }
 
-#table.td:focus{
-    background-color: rebeccapurple;
 
-
-}
 
 #Tcontainer{
 
@@ -268,24 +260,11 @@ width: 768px;
             document.getElementById("table").innerHTML=html;
          })
         };
-     
- 
+    
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-        // 모달창 
-        //가져올 데이터+ 더 찾아서 넣기
+        // // 모달창 
+        // //가져올 데이터+ 더 찾아서 넣기
  
         $('#veganModal').on('show.bs.modal', function(event) {   	
     
@@ -329,37 +308,37 @@ width: 768px;
                         }
                     }
                 };
-            if(check!=true){
-                for(i=0;i<count;i++){
-                    for(var f=0;f<fish.length;f++){
-                         if(ingriarray[i]==fish[f]) {//생선            
-                            bt.pop('비건')
-                            bt.pop('락토')
-                            bt.pop('락토 오보')
-                            check=true;
-                            break; 
-                        }
-                    }
-                }
-            };
-            if(check!=true){
-                for(var t=0;t<count;t++){
-                      for(var m=0;f<mlik.length;m++){
-                            if(ingriarray[t]==mlik[m]) {            
-                                bt.pop('비건')
-                                console.log(mlik[m])
-                                check=true;
-                                break; 
-                            }
-                    }
-                }
-            };
+        //     if(check!=true){
+        //         for(i=0;i<count;i++){
+        //             for(var f=0;f<fish.length;f++){
+        //                  if(ingriarray[i]==fish[f]) {//생선            
+        //                     bt.pop('비건')
+        //                     bt.pop('락토')
+        //                     bt.pop('락토 오보')
+        //                     check=true;
+        //                     break; 
+        //                 }
+        //             }
+        //         }
+        //     };
+        //     if(check!=true){
+        //         for(var t=0;t<count;t++){
+        //               for(var m=0;f<mlik.length;m++){
+        //                     if(ingriarray[t]==mlik[m]) {            
+        //                         bt.pop('비건')
+        //                         console.log(mlik[m])
+        //                         check=true;
+        //                         break; 
+        //                     }
+        //             }
+        //         }
+        //     };
 
         
-                console.log(vt)
-                $("#mtypes").text(bt);
+        //         console.log(vt)
+        //         $("#mtypes").text(bt);
 
-            });
+        //     });
 
 
             

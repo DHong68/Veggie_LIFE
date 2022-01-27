@@ -1,7 +1,7 @@
 {%load static%}
 <!DOCTYPE html>
 <html lang="en">
-<div class="wrapper">
+
 
     <head>
         <meta charset="utf-8" />
@@ -21,12 +21,11 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{% static 'user/css/styles2.css'%}" rel="stylesheet" />
+        <link href="{% static 'user/css/styles.css'%}" rel="stylesheet" />
 
     </head>
       <div class="main-content">
-
-    <body>
+<div class="wrapper">
     <header>
         <!-- Navigation-->
         <nav class="navbar navbar-light static-top" >
@@ -52,7 +51,7 @@
         </nav>
 
     </header>
-
+        <div class="main"
     {% block content %}
                     
                 
@@ -64,11 +63,15 @@
 
      
     {% endblock %}
-    </body> 
-      </div>
-
+    </div>
     {%block  footer%}
     <!-- Footer-->
+
+
+
+
+
+
     <footer class="footer">
         <div class="container">
             <hr>
@@ -80,7 +83,9 @@
             </div>
         </div>
     </footer>
-    {% endblock %}
+</div>
+    {% endblock %}      
+    
+
 
 </html>
-</div>
