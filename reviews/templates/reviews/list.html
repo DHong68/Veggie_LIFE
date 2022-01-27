@@ -2,6 +2,20 @@
 {% block content %}
 
 <style>
+  .pagination {
+    display: inline-block;
+  }
+  
+  .pagination a {
+    color: white;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  #res_name {
+    cursor: pointer;
+  }
+
   #list {
       font-family: 'S-CoreDream-4Regular';
   }
@@ -42,22 +56,6 @@
   </form>
 </div>
 
-<style>
-  .pagination {
-    display: inline-block;
-  }
-  
-  .pagination a {
-    color: white;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-  }
-  #res_name {
-    cursor: pointer;
-  }
-</style>
-
 <div class="container" id="list">
 <form id='fm' method="GET" action="{% url 'reviews:details' %}">
   <body style='margin:30px; overflow:scroll'>
@@ -74,7 +72,7 @@
       <th scope="col" style='text-align:center;'>작성자</th>
       <th scope="col" style='text-align:center;'>제목</th>
       <th scope="col" style='text-align:center;'>음식점 이름</th>
-      <th scope="col" style='text-align:center;'>작성일자</th>
+      <th scope="col" style='text-align:center;'>작성(수정)일자</th>
     </tr>
     {% for item in info %}
     <tr>
