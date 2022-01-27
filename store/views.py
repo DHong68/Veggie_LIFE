@@ -78,6 +78,8 @@ def search(request):
     }
     if if_session(request):
         context['user_session_id'], context['user_session_veg_type'] = if_session(request)
+        print(context['user_session_id'], context['user_session_veg_type'])
+
 
     return render(
         request, 'store/search.html', 
