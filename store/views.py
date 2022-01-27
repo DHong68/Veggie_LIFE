@@ -12,8 +12,11 @@ import json
 from isort import file
 
 from .models import Store
+#
+from user.views import if_session
 
 def show(request):
+
     stores = Store.objects.exclude(name='상호명').order_by('name')
 
     # set current page - initialize it as 1
@@ -48,6 +51,9 @@ def show(request):
         'start_page': start_page, 
         'end_page': end_page
     }
+
+    if if_session(request):
+        context['user_session_id'], context['user_session_veg_type'] = if_session(request)
 
     return render(
         request, 'store/show_results.html', 
@@ -123,6 +129,8 @@ def search(request):
         'all': all, 
         "cur_page": cur_page
     }
+    if if_session(request):
+        context['user_session_id'], context['user_session_veg_type'] = if_session(request)
 
     return render(
         request, 'store/search.html', 
