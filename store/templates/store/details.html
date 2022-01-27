@@ -1,26 +1,37 @@
 <html>
 
-{% extends "user/base.html" %}
+{% extends "user/base2.html" %}
+{% block content %}
 <head>
     <style>
-        {% comment %} .table {
-            margin: 10px;
-            width: 50%;
-        } {% endcomment %}
+        .table {
+            font-family: 'S-CoreDream-4Regular';
+        }
 
         .td {
             line-height: 130%;
+        }
+
+        #store_name {
+            text-align:center; 
+            margin-top:50px; 
+            margin-bottom:20px; 
+            font-family: 'S-CoreDream-5Medium'
+        }
+
+        #map {
+            width:50%; 
+            height: 30%;
         }
     </style>
 </head>
 
 <body>
-{% block content %}
+
 <div class="container">
 
-    <h2 style="text-align:center; margin-top:50px; margin-bottom:20px"> {{ store.name }} </h2>
-
-    <div id="map" style="width:50%; height: 30%;" class="container"></div>
+    <h2 id="store_name"> {{ store.name }} </h2>
+    <div id="map" class="container"></div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script async defer src="{{ google_map_src }}"></script>
@@ -34,40 +45,45 @@
                 center: seoul
             });
 
-        var geocoder = new google.maps.Geocoder();
-        var address = "{{ store.address }}";
-        
-        geocoder.geocode({'address': address}, function(result, status) {
-            console.log(result);
-            console.log(status);
+            var geocoder = new google.maps.Geocoder();
+            var address = "{{ store.address }}";
+            
+            geocoder.geocode({'address': address}, function(result, status) {
+                console.log(result);
+                console.log(status);
 
-            if (status === 'OK') {
-                map.setCenter(result[0].geometry.location);
-                map.setZoom(18);
+                if (status === 'OK') {
+                    map.setCenter(result[0].geometry.location);
+                    map.setZoom(18);
 
-                var marker = new google.maps.Marker({
-                    map: map,
-                    position: result[0].geometry.location
-                });
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: result[0].geometry.location
+                    });
 
-                console.log('latitude: ' + marker.position.lat());
-                console.log('longitude: ' + marker.position.lng());
-            } else {
-                alert("Geocode failed due to this reason: " + status)
-            }
-        });
-    }
+                    console.log('latitude: ' + marker.position.lat());
+                    console.log('longitude: ' + marker.position.lng());
+                } else {
+                    alert("Geocode failed due to this reason: " + status)
+                }
+            });
+        }
     </script>
 
     <hr>
-
    
     <table class="table table-borderless">
         <colgroup>
-            <col style="width:33%;">
+            <col style="width:30%;">
             <col style="width:5%">
-            <col style="width:68%;">
+            <col style="width:65%;">
         </colgroup>
+
+        <tr> 
+            <td style="text-align:right;">업종</td>
+            <td></td>
+            <td>{{ store.type }}</td>
+        <tr> 
 
         <tr> 
             <td style="text-align:right;">전화번호</td>
@@ -91,6 +107,7 @@
             </td>
         <tr>
     </table>
+
 </div>
 
 

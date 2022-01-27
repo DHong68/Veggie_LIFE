@@ -1,11 +1,11 @@
-{% extends "user/base.html"%}
+{% extends "user/base2.html"%}
 {% block content %}
 
-<div style="display: flex;justify-content:center;align-items: center;text-align: center; margin:70px 0 0 0">
+<div style="overflow: auto;display: flex;justify-content:center;align-items: center;text-align: center; margin:70px 0 70px 0;font-family: 'S-CoreDream-3Light';">
     
 <div class="mypage" style="width:100%;height:100%;display: flex;justify-content: center;align-items: center; opacity:0.7; ">
 
-    <div class="mypage_div" style="text-align: center;border: 3px solid #FFFFFF;border-radius: 7px;padding:15px;margin:30px; box-shadow:3px gray">
+    <div class="mypage_div" style="line-height:50px;text-align: center;border: 3px solid #FFFFFF;border-radius: 7px;padding:15px;margin:30px; box-shadow:3px gray">
 
         <strong style="font-size:30px;color:white">MY PAGE</strong>
 
@@ -16,7 +16,6 @@
         <strong style="font-size:20px;color:white;">Email : {{ user.email }}</strong><br>
         <strong style="font-size:20px;color:white;">채식 단계 : {{ user.veg_type }}</strong><br>
 
-        {% comment %} <a href="{% url 'user:update' user_id=user.user_id %}"> {% endcomment %}
         <a href="{% url 'user:update' user.user_id %}">
             <button class="btn btn-success"
                     style="
@@ -29,8 +28,24 @@
                         padding: 0.3rem 0.3rem;
                         border: 2px solid #FFFFFF;
                         border-radius: 7px;"
-            >UPDATE INFO</button>
+            ><strong>UPDATE INFO</strong></button>
         </a>
+
+        <a href="{% url 'user:delete' %}">
+            <button class="btn btn-success"
+                    style="
+                        width:80;
+                        height:5;
+                        color : white;
+                        font-size:20px;
+                        background-color: #c5e0b4;
+                        margin: 8px 0;
+                        padding: 0.3rem 0.3rem;
+                        border: 2px solid #FFFFFF;
+                        border-radius: 7px;"
+            ><strong>DELETE ACCOUNT</strong></button>
+        </a>
+
     </div>
         <div class="post_div" style="text-align: center;border: 3px solid #FFFFFF;border-radius: 7px;padding:15px;margin:30px; box-shadow:3px gray">
     
@@ -40,9 +55,10 @@
             
             {% for post in posts %}
                 <strong style="font-size:20px;color:white;">
-                    {% comment %} <a href="{% url 'reviews:조회'  %}"> {% endcomment %}
+                    <a href='{% url "reviews:details" %}?id={{ post.id }}'>
                         {{ post.title }}
-                    {% comment %} </a> {% endcomment %}
+                    </a>
+                    < {{ post.store_name }} >
                 </strong><br>
             {% endfor %}
     
