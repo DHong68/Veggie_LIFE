@@ -84,7 +84,7 @@ def update(request, id):
 
 def list(request):
 
-    review_list = Review.objects.order_by('-date')
+    review_list = Review.objects.order_by('-id')
 
 
     user_id = request.GET.get('user_id', '')
