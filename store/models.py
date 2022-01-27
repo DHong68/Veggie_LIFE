@@ -10,7 +10,7 @@ class Store(models.Model):
     menu = models.TextField()
 
     def menu_as_list(self):
-        return self.menu.split(',')
+        return self.menu.split(', ')
 
     class Meta:
         db_table = 'store'
