@@ -19,7 +19,9 @@
              <tbody></tbody>
 </table>
 </div>
-  <div class="modal fade" id="veganModal" tabindex="-1" role="dialog" aria-labelledby="veganModalLabel"  >
+
+
+<div class="modal fade" id="veganModal" tabindex="-1" role="dialog" aria-labelledby="veganModalLabel"  >
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -94,6 +96,7 @@
             $("#mpd").text(pd);	
             $("#mingri").text(ingri);	
            // 1. 첨가물 
+           console.log(ingri)
             var count = ingri.split(',').length - 1;
             //2. 첨가물 배열  
              var ingriarray=ingri.split(',');
@@ -149,7 +152,7 @@
             };
 
         
-                
+                console.log(vt)
                 $("#mtypes").text(bt);
 
             });
