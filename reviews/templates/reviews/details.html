@@ -6,30 +6,49 @@
     <tr>
       <td>게시글 번호</td>
       <td>작성자</td>
-      <td>제목</td>
-      <td>음식점 이름</td>
       <td>작성일자</td>
     </tr>
     <tr>
     <td>{{ review.id }}</td>
-    <td>{{ review.member_id.user_id }}</td>
-    <td>{{ review.title }}</td>
-    <td>{{ review.store_name }}</td>
+
+    {% if review.member_id %}
+        <td>{{ review.member_id.user_id }}</td>
+    {% else %}
+        <td>(알 수 없음)</td>
+    {% endif %}
+
     <td>{{ review.date }}</td>
     <tr>
     </table>
 
-    <hr>
-    {{ review.body }}
-    {{ review.file }}
+    <label for="title">제목:</label>
+        <input type="text" class="form-control" name="title" 
+            id="title" value="{{ review.title }}">
 
+    <label for="body">내용:</label>
+        <input type="text" class="form-control" name="body" 
+            id="body" value="{{ review.body }}">
+
+
+    <br>
+    {% if review.file %}
+        <img src='{{ review.file.url }}' width='20%'>
+    {% endif %}
+    <br>
+    <br>
     {% if is_logined %}
-        <form action="update/{{id}}/">
-            <button>수정</button>
-        </form>
-        <form action="delete/{{id}}/">
-            <button>삭제</button>
-        </form>
+
+        <div style="border: 1px; float: left; width: 10%;">
+            <form action="{% url 'reviews:update' id=id %}">
+                <button class="btn btn-outline-success">수정</button>
+            </form>
+        </div>
+        <div style="border: 1px; float: left; width: 10%;">
+            <form action="{% url 'reviews:delete' id=id %}">
+                <button class="btn btn-outline-success">삭제</button>
+            </form>
+        </div>
+
     {% endif %}
 
 

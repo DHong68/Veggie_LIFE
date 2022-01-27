@@ -66,11 +66,23 @@ def update(request, id):
     }
     return render(request, 'reviews/update.html', context)
 
+
+
 def list(request):
 
     review_list = Review.objects.order_by('-date')
 
 
+    user_id = request.GET.get('user_id', '')
+    if user_id:
+        review_list = review_list.filter(
+            Q(member_id__user_id__icontains=user_id)
+        )
+    title = request.GET.get('title', '')
+    if title:
+        review_list = review_list.filter(
+            Q(title__icontains=title)
+        )
     store_name = request.GET.get('store_name', '')
     if store_name:
         review_list = review_list.filter(
@@ -101,7 +113,9 @@ def list(request):
     'page_range' : range(start_page, end_page+1),
     'has_previous' : p.page(start_page).has_previous(),
     'has_next' : p.page(end_page).has_next(),
-    'store_name' : store_name
+    'user_id' : user_id,
+    'title' : title,
+    'store_name' : store_name,
     }
     return render(
         request, 'reviews/list.html', context)
@@ -114,7 +128,7 @@ def details(request):
     review = Review.objects.get(id=id)
 
     is_logined = False
-    if review.member_id is not None:
+    if 'user_id' in request.session and review.member_id:
         if request.session['user_id'] == review.member_id.user_id:
             is_logined = True
 

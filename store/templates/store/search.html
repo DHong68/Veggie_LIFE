@@ -1,8 +1,7 @@
 <html>
-
 {% extends "user/base.html"%}
-{% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> {% endcomment %}
 
+<body>
 {% block content %}
 <div class="container" style="margin-bottom: 10px; margin-top:10px">
     <form method="GET" action="{% url 'store:search' %}" class="row g-2 justify-content-center">
@@ -74,9 +73,10 @@
 </div>
 
 <style>
-    {% comment %} .pagination {
+    .pagination {
       display: inline-block;
-    } {% endcomment %}
+      width: 100%
+    }
     
     .pagination a {
       color: white;
@@ -85,39 +85,38 @@
       text-decoration: none;
     }
   </style>
-
-<div class="container">
+<div class='container'>
     <div class="row justify-content-center" style='margin:30px;'>
-        <div class="col-auto">
+        <div class="col">
             {% if key %}
                 {% if not stores %}
                     <h3> 검색 결과가 없습니다 </h3>
                     
                 {% else %}
                 <form id='fm' method="GET" action="{% url 'store:details' %}">
-                    <table class='table table-responsive'>
+                    <table class='table table-striped'>
                         <colgroup>
-                            <col style="width:25%">
+                            <col style="width:25%;">
                             <col style="width:15%">
                             <col style="width:20%">
                             <col style="width:40%">
                         </colgroup>
                 
-                        <thead class="table">
+                        <thead>
                         <tr>
-                            <th scope="col">식당명</th>
-                            <th scope="col">업종</th>
-                            <th scope="col">전화번호</th>
-                            <th scope="col">주소</th>
+                            <th scope="col" style='text-align:center;'>식당명</th>
+                            <th scope="col" style='text-align:center;'>업종</th>
+                            <th scope="col" style='text-align:center;'>전화번호</th>
+                            <th scope="col" style='text-align:center;'>주소</th>
                         </tr>
                         </thead>
                         
                         {% for s in stores %}
                         <tbody>
                         <tr>
-                            <td name="store_name"><p onclick="getName('{{ s.name }}')">{{ s.name }}</p></td>
-                            <td>{{ s.type }}</td>
-                            <td>{{ s.phone }}</td>
+                            <td name="store_name" style='text-align:center;'><p onclick="getName('{{ s.name }}')">{{ s.name }}</p></td>
+                            <td style='text-align:center;'>{{ s.type }}</td>
+                            <td style='text-align:center;'>{{ s.phone }}</td>
                             <td>{{ s.address }}</td>
                         </tbody>
                         {% endfor %}
@@ -132,9 +131,9 @@
                         {% endif %}
                 
                         {% for i in page_range %}
-                        <li>
-                            <a href='{% url "store:search" %}?search={{ searched }}&type={{ type }}&gu={{ gu }}&page={{ i }}'>{{ i }}</a>
-                        </li>
+                            <li>
+                                <a href='{% url "store:search" %}?search={{ searched }}&type={{ type }}&gu={{ gu }}&page={{ i }}'>{{ i }}</a>
+                            </li>
                         {% endfor %}
                 
                         {% if is_next %}
@@ -157,5 +156,5 @@
     }
 </script>
 {% endblock %}
-
+</body>
 </html>
