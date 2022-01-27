@@ -1,4 +1,4 @@
-{% extends "user/base2.html"%}
+{% extends "user/base.html"%}
 {% load static%}
 {% block content %}
         
@@ -13,7 +13,7 @@
             
                 <tr>
                     <td>
-                        <input type="text"  placeholder="음식을 검색하세요"  autocomplete="off"  id="p" size="25" onkeyup="enterkey()   "> </td>
+                        <input type="text"  placeholder="음식을 검색하세요"  autocomplete="off"  id="p" size="25" onkeyup="enterkey()"> </td>
                        <td><button type="button" onclick="view()" id="btnS">검색</button> </td>
                     </td>
                 </tr>
@@ -22,7 +22,7 @@
                 </tr>
         </table>
         </div>
-        <div class="container"><p id='checkp'  data-toggle='modal' data-target='#vegantpModal'>  '자신의 비건 유형을 모르겠다면?' 클릭 </p> </div>
+        <div class="container"><p id='checkp' data-toggle='modal' data-target='#vegantpModal'> 자신의 비건 유형을 모르겠다면?<i class="far fa-hand-pointer"></i>        <i class="fas fa-mouse-pointer"></i > </p> </div>
     </div>
 </div>  
 
@@ -46,12 +46,23 @@
 
 <style>
 
+
+
+#detailmodal{
+
+    border-bottom: solid 1px white;
+    border: white 1px solid;
+    padding-left: 5rem;
+    padding-right: 5rem;
+
+}
+
 #modali{
     color:green;
 
 }
 .modaltable{
-
+border: 1px solid white;
  background-color:#F3FDEC;   
  text-align: center;
  display: flex;
@@ -94,7 +105,8 @@ width: 768px;
     color: white;
     font-family: S-CoreDream-3Light;
     font-size: 20px;
-
+    margin-top: 20px;
+    cursor: pointer;
 
 
 }
@@ -211,11 +223,11 @@ width: 768px;
         <div class="modal-header">
           <h4 class="modal-title" id="veganModalLabel">상품 상세</h4>
         </div>
-        <div class="modal-body">     
-       <table class=" modaltable"> 
-          <tbody><tr> <th>제조사</th>  <td id="mcp"></td></tr>
+        <div class="modal-body" id="detailmodal">     
+       <table class="table"> 
+          <tbody><tr> <th class="col-md-1">제조사</th>  <td class="col-md-3" id="mcp"></td></tr>
           <tr> <th>상품명</th>  <td name="mpd" id="mpd"></td> </tr>
-              <tr> <th>상품 사진</th>   <td> <img src="{% static 'search/img/vegan-food.png' %}" width="250rem" height="250rem"></td></tr> 	
+              <tr> <th>상품 사진</th>   <td> <img src="{% static 'config/img/vegan-food.png' %}" width="250rem" height="250rem"></td></tr> 	
             <tr> <th>첨가물</th>  <td name="mingri" id="mingri"></td></tr>	
             <tr> <td>  <i class="fas fa-leaf" id="modali"></i> </i> 
               </td><td name="mtypes" id="mtypes"> </td></tr>	               
@@ -254,8 +266,13 @@ width: 768px;
              let num=i+1;
              let product= test['C002']['row'][i]['PRDLST_NM'];
              let Brand= test['C002']['row'][i]['BSSH_NM'];
-            let ingredient=test['C002']['row'][i]['RAWMTRL_NM']; 
+             let ingredient=test['C002']['row'][i]['RAWMTRL_NM']; 
              let type=test['C002']['row'][i]['PRDLST_DCNM'];
+                
+
+                 product = product.replace(/"/gi ,'');
+
+
                 html+=`<tr id="producttr"  data-toggle='modal' data-brand="${Brand}" data-product="${product}" data-ingredient="${ingredient}" data-target='#veganModal'><td>${i+1}</td>`
                 html+=`<td id="brand">${Brand}</td>`
                 html+=`<td id="product"> ${product}</td>`
@@ -268,20 +285,6 @@ width: 768px;
             document.getElementById("table").innerHTML=html;
          })
         };
-     
- 
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         // 모달창 
@@ -293,13 +296,16 @@ width: 768px;
             pd=$(event.relatedTarget).data('product');
             ingri=$(event.relatedTarget).data('ingredient');
             vt=$(event.relatedTarget).data('vt');
-                console.log(cp+1);
-                console.log($('#mcp').val)
+            
+          
+                        
             $('#mcp').text(cp);
             $("#mpd").text(pd);	
             $("#mingri").text(ingri);	
-           // 1. 첨가물 
-           console.log(ingri)
+
+            console.log(pd)
+
+            // 1. 첨가물 
             var count = ingri.split(',').length;
             //2. 첨가물 배열  
              var ingriarray=ingri.split(',');
@@ -308,14 +314,14 @@ width: 768px;
                 //계란 
             var eggs=['전란액','난황액','난백액','난백분','전란분','피단','알부민','계란흰자'];
                 //생선  
-            var fish=['냉동연육','까지가자미','가자미살','가자미','돔연육','부레풀','오징어','새우','달고기','오징어젓갈무침','조미건어포류','조미건어포류'];
+            var fish=['냉동연육','생선젤라틴','까지가자미','가자미살','가자미','돔연육','부레풀','오징어','새우','달고기','오징어젓갈무침','조미건어포류','조미건어포류'];
                 //우유 
             var mlik=['우유', '산양유', '전지분유',  '가당연유', '무당연유', '전지연유', '탈지연유','버터유', '농축유류', '유크림류', '버터류', 
              '치즈류', '분유류', '유청류', '유당', '유단백가수분해식품', '유함유가공품','연유'];
                 //고기
-            var meat=['소시지','햄','젤라틴','펩신','소고기','돼지고기','오리고기','비프분말','돼지뼈다귀','쇠고기혼합분말']                
+            var meat=['조미닭고기후레이크','양념소고기분말','치킨스프베이스','소시지','햄','젤라틴','펩신','소고기','돼지고기','오리고기','비프분말','돼지뼈다귀','쇠고기혼합분말']                
             var vegan=['벌꿀','사양벌꿀']
-            var excl=['원재료미등록','복합조미식품']
+            var excl=['원재료미등록','복합조미식품','']
                 //비건 -- 완전 채식
                 //계란 우유 ok-락토 오보
                 //락토--우유 ok
@@ -325,38 +331,28 @@ width: 768px;
             console.log(count)
 
         
-
             var check=false;	
             
             for(i=0;i<count;i++){
                 for(var j=0;j<excl.length;j++){
-                    if(ingriarray[i]==excl[j]){ //고기            
+                    if(ingriarray[i]==excl[j]){            
                         check=true;     
-                        console.log(ingriarray[i]);
-                        console.log(excl[j]);
-                        vt=['데이터가 더 필요합니다...']
+                        vt=['데이터가 더 필요합니다']
                         break; 
                         }
                     }
                 }
-
-
-
-
             if(check!=true){	 
             for(i=0;i<count;i++){
                 for(var j=0;j<meat.length;j++){
-                    if(ingriarray[i]==meat[j]){ //고기            
+                    if(ingriarray[i]==meat[j]){             
                         check=true;     
-                        console.log(ingriarray[i]);
-                        console.log(meat[j]);
                         vt=['X']
                         break; 
                         }
                     }
                 }
             }    
-
                 if(check!=true){
                      for(i=0;i<count;i++){
                         for(var j=0;j<fish.length;j++){
@@ -371,8 +367,8 @@ width: 768px;
                 }
             
             };
+            
                 
-
             if(check!=true){
                 for(var t=0;t<count;t++){
                       for(var m=0;m<mlik.length;m++){
@@ -385,7 +381,6 @@ width: 768px;
                     }
                 }
             };
-
             if(check!=true){
                      for(i=0;i<count;i++){
                         for(var j=0;j<eggs.length;j++){
@@ -415,12 +410,7 @@ width: 768px;
                 }
             
             };
-
-
-
-
-            
-        
+  
                 $("#mtypes").text(vt);
 
             });
@@ -432,15 +422,7 @@ width: 768px;
             view()
         }
     }
- 
-
-
-
-            
-
-                 
-                
-               
+    
 
          </script>
 
