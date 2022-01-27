@@ -5,10 +5,10 @@
     <div class="container" style="margin-top:30px">
     <table class='table table-striped'>
     <tr>
-      <td>게시글 번호</td>
-      <td>작성자</td>
-      <td>음식점 이름</td>
-      <td>작성일자</td>
+      <th>게시글 번호</th>
+      <th>작성자</th>
+      <th>음식점 이름</th>
+      <th>작성일자</th>
     </tr>
     <tr>
     <td>{{ review.id }}</td>
@@ -39,8 +39,14 @@
     {% endif %}
     <br>
     <br>
-    {% if is_logined %}
+    
+    <div style="float: left;">
+        <form action="{% url 'reviews:download' id=id %}">
+            <button class="btn btn-success" style="margin-left:20px; padding:10px 50px;">다운로드</button>
+        </form>
+    </div>
 
+    {% if is_logined %}
         <div style="float: right;">
             <form action="{% url 'reviews:update' id=id %}">
                 <button class="btn btn-success" style="margin-left:20px; padding:10px 50px;">수정</button>
