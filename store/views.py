@@ -1,6 +1,3 @@
-from audioop import add
-from modulefinder import STORE_GLOBAL
-from django.http import HttpResponse
 from django.shortcuts import render
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -9,10 +6,7 @@ from os import path
 from django.core.exceptions import ImproperlyConfigured
 import json
 
-from isort import file
-
 from .models import Store
-#
 from user.views import if_session
 
 def show(request):
@@ -63,7 +57,6 @@ def show(request):
 
 def search(request):
     stores = Store.objects.exclude(name='상호명').order_by('name')
-    all = stores
 
     key = False
 
@@ -125,8 +118,7 @@ def search(request):
         'searched': searched, 
         'gu': gu,
         'type': type,
-        'key': key, 
-        'all': all, 
+        'key': key,
         "cur_page": cur_page
     }
     if if_session(request):
@@ -140,16 +132,6 @@ def search(request):
 
 def details(request):
     store_name = request.GET.get('store')
-<<<<<<< HEAD
-    store = Store.objects.filter(name=store_name)
-    context = {
-        'store': store
-    }
-    if if_session(request):
-        context['user_session_id'], context['user_session_veg_type'] = if_session(request)
-
-    return render(request, 'store/details.html', context)
-=======
     store = Store.objects.get(name=store_name)
 
     file_path = path.abspath(__file__)
@@ -171,4 +153,3 @@ def details(request):
     google_map_src = "https://maps.googleapis.com/maps/api/js?key=" + SECRET_KEY + "&callback=initMap"
 
     return render(request, 'store/details.html', {"store": store, "google_map_src": google_map_src})
->>>>>>> 6eae5eaa95c3f8803a7084ba55c02a4ef2aa5394
