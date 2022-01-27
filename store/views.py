@@ -1,6 +1,3 @@
-from audioop import add
-from modulefinder import STORE_GLOBAL
-from django.http import HttpResponse
 from django.shortcuts import render
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -9,10 +6,7 @@ from os import path
 from django.core.exceptions import ImproperlyConfigured
 import json
 
-from isort import file
-
 from .models import Store
-#
 from user.views import if_session
 
 def show(request):
@@ -63,7 +57,6 @@ def show(request):
 
 def search(request):
     stores = Store.objects.exclude(name='상호명').order_by('name')
-    all = stores
 
     key = False
 
@@ -125,8 +118,7 @@ def search(request):
         'searched': searched, 
         'gu': gu,
         'type': type,
-        'key': key, 
-        'all': all, 
+        'key': key,
         "cur_page": cur_page
     }
     if if_session(request):

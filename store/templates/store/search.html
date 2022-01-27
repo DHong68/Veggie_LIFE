@@ -141,7 +141,7 @@
                         </tbody>
                         {% endfor %}
                     </table>
-                        
+
                     <div style='text-align:center;'>
                         <ul class='pagination'>
                         {% if is_prev %}
@@ -160,9 +160,6 @@
                                 <a id="page" href='{% url "store:search" %}?searched={{ searched }}&type={{ type }}&gu={{ gu }}&page={{ i }}'>{{ i }}</a>
                             </li>
                             {% endif %}
-                            
-                            
-                            
                         {% endfor %}
                 
                         {% if is_next %}
@@ -171,7 +168,7 @@
                             </li>
                         {% endif %}
                         </ul>
-                    </div>
+                    </div>\
                 </form>
                 {% endif %}
                 
@@ -181,7 +178,8 @@
 </div>
 <script> 
     function getName(name) {
-        window.location.href="{% url 'store:details' %}?store=" + name;
+        var res_name = name.replace("&", "%26")
+        window.location.href = "{% url 'store:details' %}?store=" + res_name;
     }
 </script>
 {% endblock %}
