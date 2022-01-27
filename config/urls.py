@@ -12,7 +12,7 @@ urlpatterns = [
     path('reviews/', include('reviews.urls')),  
     path('search/', include('search.urls')),
     path('store/', include('store.urls')),
-    path('user/', include('user.urls')),
+    path('', include('user.urls')),
     
   
    

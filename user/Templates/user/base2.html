@@ -40,7 +40,6 @@
                 <ul id="nav2" class="nav justify-content-end ">
                     {% if request.session.user_id %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:logout' %}">LOGOUT</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'user:delete' %}">WITHDRAWL</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:mypage' %}">
                             {{ user_session_id }} 
                             ({{ user_session_veg_type }}) 🌱</a></li>
