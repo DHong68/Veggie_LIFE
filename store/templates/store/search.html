@@ -134,9 +134,18 @@
                         {% endif %}
                 
                         {% for i in page_range %}
+                            {% if i == cur_page %}
                             <li>
-                                <a href='{% url "store:search" %}?searched={{ searched }}&type={{ type }}&gu={{ gu }}&page={{ i }}'>{{ i }}</a>
+                                <a id="page" href='{% url "store:search" %}?searched={{ searched }}&type={{ type }}&gu={{ gu }}&page={{ i }}' style="color: green">{{ i }}</a>
                             </li>
+                            {% else %}
+                            <li>
+                                <a id="page" href='{% url "store:search" %}?searched={{ searched }}&type={{ type }}&gu={{ gu }}&page={{ i }}'>{{ i }}</a>
+                            </li>
+                            {% endif %}
+                            
+                            
+                            
                         {% endfor %}
                 
                         {% if is_next %}
