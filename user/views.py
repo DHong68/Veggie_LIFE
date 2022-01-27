@@ -29,7 +29,7 @@ def signup(request):
                     context['error'] = '비밀번호가 일치하지 않습니다.' 
                     return render(request, "user/signup.html", context)
                signupform.save()
-               return redirect('/user/login')
+               return redirect('/login')
      else:
           form = SignupForm()
      return render(request, 'user/signup.html', {'form': form})
