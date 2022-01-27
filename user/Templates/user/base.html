@@ -1,18 +1,14 @@
 {%load static%}
 <!DOCTYPE html>
 <html lang="en">
-<div class="wrapper">
-
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <script src="{% static 'search/js/jquery.min.js' %}"></script>
-        <script src="{% static 'search/js/popper.js' %}"></script>
-        <script src="{% static 'search/js/bootstrap.min.js' %}"></script>
-        <script src="{% static 'search/js/main.js' %}"></script>
         <title>VEGGIE LIFE</title>
+
+    
         <!-- Bootstrap icons-->
         <link rel="stylesheet" href="{% static 'user/css/styles.css' %}">
         <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
@@ -24,10 +20,7 @@
         <link href="{% static 'user/css/styles.css'%}" rel="stylesheet" />
 
     </head>
-      <div class="main-content">
-
     <body>
-        <!-- Bootstrap core JS-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -38,16 +31,17 @@
         <nav class="navbar navbar-light static-top" >
             <div class="container">
                 <ul id="nav1" class="nav justify-content-end ">
-                    <li class="nav-item"><a class="navbar-brand" href="">VEGGIE LIFE</a></li>
+                    <li class="nav-item"><a class="navbar-brand" href="/">VEGGIE LIFE</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'store:search' %}">| VEGGIE RESTAURANTS</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'reviews:list' %}">| REVIEWS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#!">| REVIEWS</a></li>
                 </ul>
 
                 <ul id="nav2" class="nav justify-content-end ">
                     {% if request.session.user_id %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:logout' %}">LOGOUT</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'user:delete' %}">WITHDRAWL</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'user:mypage' %}">{{ user.name }} ({{ user.veg_type }}) 🌱</a></li>
+                        {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'user:delete' %}">탈퇴</a></li> {% endcomment %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'user:mypage' %}">MY PAGE</a></li>
+                        {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'user:mypage' user_id=user.user_id %}">MY PAGE</a></li> {% endcomment %}
                     {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:login' %}">LOGIN</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:signup' %}">SIGN UP</a></li>
@@ -57,23 +51,28 @@
         </nav>
 
     </header>
-
-    
         <!-- Masthead-->
     {% block content %}
+                    
+                
 
+
+
+                   
+
+
+     
     {% endblock %}
-    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br>
     </body> 
-      </div>
-
     {%block  footer%}
     <!-- Footer-->
-    <footer class="footer">
+    <footer class="footer  fixed-bottom">
         <div class="container">
             <hr>
             <div class="row">
                 <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
+                
                     <p class="text-muted small mb-4 mb-lg-0">     &copy; Your Website 2021. All Rights Reserved.</p>
                 </div>
                 
@@ -81,4 +80,7 @@
         </div>
     </footer>
     {% endblock %}
+<!-- Bootstrap core JS-->
+
+</body>
 </html>

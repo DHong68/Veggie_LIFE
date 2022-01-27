@@ -24,8 +24,9 @@
         <link href="{% static 'user/css/styles.css'%}" rel="stylesheet" />
 
     </head>
-      <div class="main-content">
-<div class="wrapper">
+    <div class="wrapper">
+
+<div class="main-content">
     <header>
         <!-- Navigation-->
         <nav class="navbar navbar-light static-top" >
@@ -48,10 +49,9 @@
                     {% endif %}
               
                 </ul>
+                </div>
         </nav>
-
     </header>
-        <div class="main"
     {% block content %}
                     
                 
@@ -64,10 +64,14 @@
      
     {% endblock %}
     </div>
+
+
     {%block  footer%}
     <!-- Footer-->
 
-
+</div>
+</div>
+</div>
 
 
 
@@ -83,7 +87,7 @@
             </div>
         </div>
     </footer>
-</div>
+
     {% endblock %}      
     
 
