@@ -95,7 +95,7 @@ def update(request, user_id):
                     return render(request, "user/update.html", context)
                signupform.save()
                logout(request)
-               return redirect('/user/login')
+               return redirect('/login')
      else:
           form = SignupForm(instance=user)
      context['form'] = form
