@@ -76,6 +76,7 @@ def search(request):
         'key': key,
         "cur_page": cur_page
     }
+
     if if_session(request):
         context['user_session_id'], context['user_session_veg_type'] = if_session(request)
         print(context['user_session_id'], context['user_session_veg_type'])
@@ -109,4 +110,13 @@ def details(request):
     SECRET_KEY = get_secret("GOOGLE_MAP_KEY")
     google_map_src = "https://maps.googleapis.com/maps/api/js?key=" + SECRET_KEY + "&callback=initMap"
 
-    return render(request, 'store/details.html', {"store": store, "google_map_src": google_map_src})
+    context = {
+        "store": store, 
+        "google_map_src": google_map_src
+        }
+
+    if if_session(request):
+        context['user_session_id'], context['user_session_veg_type'] = if_session(request)
+        print(context['user_session_id'], context['user_session_veg_type'])
+    
+    return render(request, 'store/details.html', context)
