@@ -5,6 +5,12 @@ from django.shortcuts import render
 from django.db.models import Q
 from django.core.paginator import Paginator
 
+from os import path
+from django.core.exceptions import ImproperlyConfigured
+import json
+
+from isort import file
+
 from .models import Store
 
 def show(request):
@@ -126,5 +132,23 @@ def search(request):
 def details(request):
     store_name = request.GET.get('store')
     store = Store.objects.get(name=store_name)
-    
-    return render(request, 'store/details.html', {"store": store})
+
+    file_path = path.abspath(__file__)
+    dir_path = path.dirname(file_path)
+    key_path = path.join(dir_path, 'key.json')
+
+    with open(key_path) as f:
+        secret_key = json.loads(f.read())
+
+    def get_secret(setting):
+        try:
+            return secret_key[setting]
+        except KeyError:
+            error_msg = "Set the {} environment variable".format(setting)
+            raise ImproperlyConfigured(error_msg)
+
+
+    SECRET_KEY = get_secret("GOOGLE_MAP_KEY")
+    google_map_src = "https://maps.googleapis.com/maps/api/js?key=" + SECRET_KEY + "&callback=initMap"
+
+    return render(request, 'store/details.html', {"store": store, "google_map_src": google_map_src})
