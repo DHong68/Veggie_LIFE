@@ -1,3 +1,5 @@
+from audioop import add
+from modulefinder import STORE_GLOBAL
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.db.models import Q
@@ -123,6 +125,6 @@ def search(request):
 
 def details(request):
     store_name = request.GET.get('store')
-    store = Store.objects.filter(name=store_name)
-
+    store = Store.objects.get(name=store_name)
+    
     return render(request, 'store/details.html', {"store": store})
