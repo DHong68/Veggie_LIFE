@@ -17,17 +17,6 @@ def home(request):
           return render(request, 'user/home.html', context)
      else:
           return render(request, 'user/home.html')
-     
-# def home(request):
-#      user_id = request.session.get('user_id')
-#      if user_id:
-#           user = User.objects.get(user_id = user_id)
-#           context = {}
-#           context['user'] = user
-#           return render(request, 'user/home.html', context)
-#      else:
-#           return render(request, 'user/home.html')
-     
           
 def signup(request):
      if request.method == 'POST':
@@ -93,17 +82,22 @@ def mypage(request):
 
 def update(request, user_id):
      user = get_object_or_404(User, user_id = user_id)
+     context = {}
+     if if_session(request):
+          context['user_session_id'], context['user_session_veg_type'] = if_session(request)
      if request.method == 'POST':
           form = SignupForm(request.POST, instance=user)
           re_password = request.POST.get('re_password')
-          context = {}
           if form.is_valid():
                signupform = form.save(commit=False)
                if signupform.password != re_password:
                     context['error'] = '비밀번호가 일치하지 않습니다.' 
                     return render(request, "user/update.html", context)
                signupform.save()
+               logout(request)
                return redirect('/user/login')
      else:
           form = SignupForm(instance=user)
-     return render(request, 'user/update.html', {'form': form, 'user': user})
+     context['form'] = form
+     context['user'] = user
+     return render(request, 'user/update.html', context)
