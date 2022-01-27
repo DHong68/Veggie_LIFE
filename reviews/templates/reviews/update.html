@@ -25,13 +25,19 @@
             </div>
 
             <div style="margin:20px 20px 20px 0px;">
-                <label for="file" style="font-size:120%; margin-right:10px">첨부 사진</label>
-                <input type = "file" name = "file">
+                <label for="file" style="font-size:120%; margin-right:10px">첨부 사진:</label>
+                <input type = "file" name = "file" id="files">
+            </div>
+            <div style="margin:20px 20px 20px 0px">
+                <label for="files">현재 파일: {{ review.file }}</label>
             </div>
 
+            <div style="float: right;">
+                <button type="button" class="btn btn-success" style="padding:10px 50px; margin-left:20px;"
+                    onclick="document.location.href='/reviews/details/?id={{ review.id }}'">취소</button>
+            </div>
             <div style="float:right;">
                 <input type="submit" value="등록" class='btn btn-success' style="padding:10px 50px;">
-                <input type="reset" value="취소" class='btn btn-success' style="padding:10px 50px;">
             </div>
         </form>
     </div>
