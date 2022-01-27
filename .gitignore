@@ -1,5 +1,7 @@
 secrets.json
 
+/store/key.json
+
 # Created by https://www.toptal.com/developers/gitignore/api/windows,django,python,visualstudio
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,django,python,visualstudio
 
