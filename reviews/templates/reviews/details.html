@@ -39,8 +39,14 @@
     {% endif %}
     <br>
     <br>
-    {% if is_logined %}
+    
+    <div style="float: left;">
+        <form action="{% url 'reviews:download' id=id %}">
+            <button class="btn btn-success" style="margin-left:20px; padding:10px 50px;">다운로드</button>
+        </form>
+    </div>
 
+    {% if is_logined %}
         <div style="float: right;">
             <form action="{% url 'reviews:update' id=id %}">
                 <button class="btn btn-success" style="margin-left:20px; padding:10px 50px;">수정</button>
