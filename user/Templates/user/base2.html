@@ -26,70 +26,51 @@
     </head>
     <div class="wrapper">
 
-<div class="main-content">
-    <header>
-        <!-- Navigation-->
-        <nav class="navbar navbar-light static-top" >
-            <div class="container">
-                <ul id="nav1" class="nav justify-content-end ">
-                    <li class="nav-item"><a class="navbar-brand" href="{% url 'user:home' %}">VEGGIE LIFE</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'store:search' %}">| VEGGIE RESTAURANTS</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'reviews:list' %}">| REVIEWS</a></li>
-                </ul>
+    <div class="main-content">
+        <header>
+            <!-- Navigation-->
+            <nav class="navbar navbar-light static-top" >
+                <div class="container">
+                    <ul id="nav1" class="nav justify-content-end ">
+                        <li class="nav-item"><a class="navbar-brand" href="{% url 'user:home' %}">VEGGIE LIFE</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'store:search' %}">| VEGGIE RESTAURANTS</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'reviews:list' %}">| REVIEWS</a></li>
+                    </ul>
 
-                <ul id="nav2" class="nav justify-content-end ">
-                    {% if request.session.user_id %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'user:logout' %}">LOGOUT</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'user:mypage' %}">
-                            {{ user_session_id }} 
-                            ({{ user_session_veg_type }}) 🌱</a></li>
-                    {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'user:login' %}">LOGIN</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'user:signup' %}">SIGN UP</a></li>
-                    {% endif %}
-              
-                </ul>
-                </div>
-        </nav>
-    </header>
-    {% block content %}
-                    
+                    <ul id="nav2" class="nav justify-content-end ">
+                        {% if request.session.user_id %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'user:logout' %}">LOGOUT</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'user:mypage' %}">
+                                {{ user_session_id }} 
+                                ({{ user_session_veg_type }}) 🌱</a></li>
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'user:login' %}">LOGIN</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'user:signup' %}">SIGN UP</a></li>
+                        {% endif %}
                 
-
-
-
-                   
-
-
-     
-    {% endblock %}
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        
     </div>
 
 
     {%block  footer%}
-    <!-- Footer-->
+        <!-- Footer-->
 
-</div>
-</div>
-</div>
-
-
-
-
-    <footer class="footer">
-        <div class="container">
-            <hr>
-            <div class="row">
-                <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
-                    <p class="text-muted small mb-4 mb-lg-0">     &copy; Your Website 2021. All Rights Reserved.</p>
+        <footer class="footer">
+            <div class="container">
+                <hr>
+                <div class="row">
+                    <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
+                        <p class="text-muted small mb-4 mb-lg-0">     &copy; Your Website 2022. All Rights Reserved.</p>
+                    </div>
+                    
                 </div>
-                
             </div>
-        </div>
-    </footer>
+        </footer>
 
     {% endblock %}      
     
-
-
 </html>
