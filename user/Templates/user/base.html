@@ -12,10 +12,9 @@
         <!-- Bootstrap icons-->
         <link rel="stylesheet" href="{% static 'user/css/styles.css' %}">
         <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
-
+        
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'user/css/styles.css'%}" rel="stylesheet" />
 
@@ -32,7 +31,7 @@
         <nav class="navbar navbar-light static-top" >
             <div class="container">
                 <ul id="nav1" class="nav justify-content-end ">
-                    <li class="nav-item"><a class="navbar-brand" href="/">VEGGIE LIFE</a></li>
+                    <li class="nav-item"><a class="navbar-brand" href="{% url 'user:home' %}">VEGGIE LIFE</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'store:search' %}">| VEGGIE RESTAURANTS</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'reviews:list' %}">| REVIEWS</a></li>
                 </ul>
@@ -41,7 +40,7 @@
                     {% if request.session.user_id %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:logout' %}">LOGOUT</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:delete' %}">WITHDRAWL</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'user:mypage' %}">{{ user.name }} ({{ user.veg_type }}) 🌱</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'user:mypage' %}">{{ user_session.name }} ({{ user_session.veg_type }}) 🌱</a></li>
                     {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:login' %}">LOGIN</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:signup' %}">SIGN UP</a></li>
