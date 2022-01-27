@@ -34,6 +34,7 @@
 <div class="table container" id="Tcontainer">
 <table class="table" id="table">
     <tbody>  
+        
     </tbody>
 </table>
 </div>
@@ -115,6 +116,11 @@ width: 768px;
 
 }
 
+#producttr:hover{
+    background-color: #a0d87d;
+    cursor: pointer;
+    color: white;
+}
 
 
 .homesearch input#p{
@@ -292,7 +298,6 @@ width: 768px;
 
 
         // 모달창 
-        //가져올 데이터+ 더 찾아서 넣기
  
         $('#veganModal').on('show.bs.modal', function(event) {   	
     
@@ -300,8 +305,6 @@ width: 768px;
             pd=$(event.relatedTarget).data('product');
             ingri=$(event.relatedTarget).data('ingredient');
             vt=$(event.relatedTarget).data('vt');
-            
-          
                         
             $('#mcp').text(cp);
             $("#mpd").text(pd);	
@@ -316,28 +319,23 @@ width: 768px;
              
              var vt=['페스코','락토오보','락토','비건'];
                 //계란 
-            var eggs=['전란액','난황액','난백액','난백분','전란분','피단','알부민','계란흰자'];
+            var eggs=['전란액','난황액','난백액','난백분','전란분','피단','알부민','계란흰자','알부민'];
                 //생선  
-            var fish=['냉동연육','생선젤라틴','까지가자미','가자미살','가자미','돔연육','부레풀','오징어','새우','달고기','오징어젓갈무침','조미건어포류','조미건어포류'];
+            var fish=['냉동연육','굴농축액','생선젤라틴','비타민D3','참치','붉은메기살','까지가자미','참치','대구살','아귀살','연어','가다랑어','하나가쓰오부시','고등어','수산물가공품',
+            '굴','게살','홍합','조개','가자미살','가자미','돔연육','오메가3','부레풀','오징어','새우','달고기','오징어젓갈무침','조미건어포류','조미건어포류'];
                 //우유 
-            var mlik=['우유', '산양유', '전지분유',  '가당연유', '무당연유', '전지연유', '탈지연유','버터유', '농축유류', '유크림류', '버터류', 
-             '치즈류', '분유류', '유청류', '유당', '유단백가수분해식품', '유함유가공품','연유'];
+            var mlik=['우유', '산양유', '전지분유','카프릴산','유크림', '가당연유', '무당연유', '전지연유', '탈지연유','버터유', '농축유류', '유크림류','버터류','시유', 
+             '치즈류', '분유류', '유청류', '유당', '유단백가수분해식품','카제인','유청','유함유가공품','연유','탈지분유','탈지분유분말','산양유분말','낙타유','산양유'];
                 //고기
-            var meat=[ '사골분말','조미닭고기후레이크','양념소고기분말','치킨스프베이스','소시지','햄','젤라틴','펩신','소고기','돼지고기','오리고기','비프분말','돼지뼈다귀','쇠고기혼합분말']                
-            var vegan=['벌꿀','사양벌꿀']
-            var excl=['원재료미등록','복합조미식품','']
+            var meat=[ '사골분말','라드','소고기육수','닭고기','양고기','닭가루','리파아제','조미닭고기후레이크','해리','양념소고기분말','치킨스프베이스','베이컨','등심','목심','안심','삼겹살','갈비','양념갈비',
+            ,'소시지','햄','젤라틴','펩신','소고기','돼지고기','오리고기','비프분말','돼지뼈다귀','쇠고기혼합분말']                
+            var vegan=['벌꿀','사양벌꿀','올리고당','메이플시럽','조청','코치닐','케라틴','팜유','프로폴리스']
+            var excl=['원재료미등록','복합조미식품','','국류','반찬','밥류']
                 //비건 -- 완전 채식
                 //계란 우유 ok-락토 오보
                 //락토--우유 ok
                 //생선 달걀 우유 ok ->페스코
-            console.log(ingriarray);
-            console.log(fish)
-            console.log(count)
-
-        
-            var check=false;	
-            
-        
+           var check=false;	
             	 
             for(i=0;i<count;i++){
                 for(var j=0;j<meat.length;j++){
@@ -370,7 +368,6 @@ width: 768px;
                       for(var m=0;m<mlik.length;m++){
                             if(ingriarray[t]==mlik[m]) {            
                                 vt=['페스코','락토오보'];
-                                console.log(mlik[m])
                                 check=true;
                                 break; 
                             }
@@ -382,8 +379,6 @@ width: 768px;
                         for(var j=0;j<eggs.length;j++){
                                 if(ingriarray[i]==eggs[j]){           
                                     check=true;     
-                                    console.log(ingriarray[i]);
-                                    console.log(eggs[j]);
                                     vt=['페스코','락토오보'];
                                     break; 
                                         }
@@ -397,8 +392,6 @@ width: 768px;
                         for(var j=0;j<vegan.length;j++){
                                 if(ingriarray[i]==vegan[j]){           
                                     check=true;     
-                                    console.log(ingriarray[i]);
-                                    console.log(vegan[j]);
                                     vt=['페스코','락토오보','락토'];
                                     break; 
                                         }
@@ -419,18 +412,10 @@ width: 768px;
                         }
                     }
             }
-
-
-
-
-
-  
                 $("#mtypes").text(vt);
 
             });
-
-
-            
+           
             function enterkey() {
         if (window.event.keyCode == 13) {
             view()
