@@ -120,7 +120,8 @@ def search(request):
         'gu': gu,
         'type': type,
         'key': key, 
-        'all': all
+        'all': all, 
+        "cur_page": cur_page
     }
 
     return render(
