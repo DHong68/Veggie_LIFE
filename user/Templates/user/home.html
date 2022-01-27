@@ -22,7 +22,7 @@
                 </tr>
         </table>
         </div>
-        <div class="container"><p id='checkp' data-toggle='modal' data-target='#vegantpModal'> 자신의 비건 유형을 모르겠다면? <i class="fas fa-mouse-pointer"></i > </p> </div>
+        <div class="container"><p id='checkp' data-toggle='modal' data-target='#vegantpModal'> 자신의 비건 유형을 모르겠다면? <i class="fas fa-mouse-pointer" id="ifas"></i > </p> </div>
     </div>
 </div>  
 
@@ -110,7 +110,7 @@ width: 768px;
 
 
 }
-#checkp:hover{
+#ifas:hover{
     color: green;
 
 }
@@ -323,7 +323,7 @@ width: 768px;
             var mlik=['우유', '산양유', '전지분유',  '가당연유', '무당연유', '전지연유', '탈지연유','버터유', '농축유류', '유크림류', '버터류', 
              '치즈류', '분유류', '유청류', '유당', '유단백가수분해식품', '유함유가공품','연유'];
                 //고기
-            var meat=['조미닭고기후레이크','양념소고기분말','치킨스프베이스','소시지','햄','젤라틴','펩신','소고기','돼지고기','오리고기','비프분말','돼지뼈다귀','쇠고기혼합분말']                
+            var meat=[ '사골분말','조미닭고기후레이크','양념소고기분말','치킨스프베이스','소시지','햄','젤라틴','펩신','소고기','돼지고기','오리고기','비프분말','돼지뼈다귀','쇠고기혼합분말']                
             var vegan=['벌꿀','사양벌꿀']
             var excl=['원재료미등록','복합조미식품','']
                 //비건 -- 완전 채식
