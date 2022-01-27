@@ -1,9 +1,42 @@
 <html>
 {% extends "user/base.html"%}
+{% block content %}
+<head>
+    <style>
+        .pagination {
+          display: inline-block;
+          width: 100%
+        }
+        
+        .pagination a {
+          color: white;
+          float: left;
+          padding: 8px 16px;
+          text-decoration: none;
+        }
+        #res_name {
+            cursor: pointer;
+        }
+
+        .table {
+            font-family: 'S-CoreDream-3Light';
+            text-align:center;
+        }
+
+        #no_result{
+            font-family: 'S-CoreDream-5Medium'; 
+            text-align: center; 
+            margin-top: 150px;
+        }
+
+        #search {
+            font-family: 'S-CoreDream-4Regular';
+        }
+      </style>
+</head>
 
 <body>
-{% block content %}
-<div class="container" style="margin-bottom: 10px; margin-top:10px">
+<div id="search" class="container" style="margin-bottom: 10px; margin-top:10px">
     <form method="GET" action="{% url 'store:search' %}" class="row g-2 justify-content-center">
 
         <div class="col-md-2" id="gu">
@@ -72,28 +105,12 @@
     </form>
 </div>
 
-<style>
-    .pagination {
-      display: inline-block;
-      width: 100%
-    }
-    
-    .pagination a {
-      color: white;
-      float: left;
-      padding: 8px 16px;
-      text-decoration: none;
-    }
-    #res_name {
-        cursor: pointer;
-    }
-  </style>
 <div class='container'>
-    <div class="row justify-content-center" style='margin:30px;'>
+    <div class="row justify-content-center" style='margin:30px; '>
         <div class="col">
             {% if key %}
                 {% if not stores %}
-                    <h3> 검색 결과가 없습니다 </h3>
+                    <div id="no_result"><h2> 검색 결과가 없습니다 :( </h2></div>
                     
                 {% else %}
                 <form id='fm' method="GET" action="{% url 'store:details' %}">
@@ -106,7 +123,7 @@
                         </colgroup>
                 
                         <thead>
-                        <tr>
+                        <tr style="text-align:center; font-family: 'S-CoreDream-5Medium';" >
                             <th scope="col" style='text-align:center;'>식당명</th>
                             <th scope="col" style='text-align:center;'>업종</th>
                             <th scope="col" style='text-align:center;'>전화번호</th>
@@ -117,14 +134,14 @@
                         {% for s in stores %}
                         <tbody>
                         <tr>
-                            <td id="res_name" name="store_name" style='text-align:center;'><p onclick="getName('{{ s.name }}')">{{ s.name }}</p></td>
-                            <td style='text-align:center;'>{{ s.type }}</td>
-                            <td style='text-align:center;'>{{ s.phone }}</td>
+                            <td id="res_name" name="store_name"><p onclick="getName('{{ s.name }}')">{{ s.name }}</p></td>
+                            <td>{{ s.type }}</td>
+                            <td>{{ s.phone }}</td>
                             <td>{{ s.address }}</td>
                         </tbody>
                         {% endfor %}
                     </table>
-                        
+
                     <div style='text-align:center;'>
                         <ul class='pagination'>
                         {% if is_prev %}
@@ -143,9 +160,6 @@
                                 <a id="page" href='{% url "store:search" %}?searched={{ searched }}&type={{ type }}&gu={{ gu }}&page={{ i }}'>{{ i }}</a>
                             </li>
                             {% endif %}
-                            
-                            
-                            
                         {% endfor %}
                 
                         {% if is_next %}
@@ -164,7 +178,8 @@
 </div>
 <script> 
     function getName(name) {
-        window.location.href="{% url 'store:details' %}?store=" + name;
+        var res_name = name.replace("&", "%26")
+        window.location.href = "{% url 'store:details' %}?store=" + res_name;
     }
 </script>
 {% endblock %}

@@ -1,34 +1,51 @@
-{% extends 'user/base.html' %}
+{% extends 'user/base2.html' %}
 {% block content %}
 
+<head>
+    <style>
+        #body, #title {
+            font-family: 'S-CoreDream-3Light';
+        }
+
+        .button{
+            font-family: 'S-CoreDream-5Medium';
+        }
+
+        #detail {
+            font-family: 'S-CoreDream-4Regular';
+        }
+    </style>
+</head>
+
 <body style='margin:30px;'>
-    <div class="container" style="margin-top:30px">
+    <div class="container" id="detail" style="margin-top:30px">
     <table class='table table-striped'>
-    <tr>
-      <td>게시글 번호</td>
-      <td>작성자</td>
-      <td>음식점 이름</td>
-      <td>작성일자</td>
-    </tr>
-    <tr>
-    <td>{{ review.id }}</td>
+        <tr id="table_h" style="font-family: 'S-CoreDream-5Medium';">
+            <th>게시글 번호</th>
+            <th>작성자</th>
+            <th>음식점 이름</th>
+            <th>작성일자</th>
+        </tr>
+    
+        <tr style="font-family: 'S-CoreDream-4Regular';">
+            <td>{{ review.id }}</td>
 
-    {% if review.member_id %}
-        <td>{{ review.member_id.user_id }}</td>
-    {% else %}
-        <td>(알 수 없음)</td>
-    {% endif %}
+            {% if review.member_id %}
+                <td>{{ review.member_id.user_id }}</td>
+            {% else %}
+                <td>(알 수 없음)</td>
+            {% endif %}
 
-    <td>{{ review.store_name }}</td>
-    <td>{{ review.date }}</td>
-    <tr>
+            <td>{{ review.store_name }}</td>
+            <td>{{ review.date }}</td>
+        </tr>
     </table>
 
-    <label for="title" style="font-size:150%;">제목:</label>
+    <label for="title" style="font-size:150%; font-family: 'S-CoreDream-5Medium';">제목:</label>
         <input type="text" class="form-control" name="title" 
             id="title" value="{{ review.title }}">
 
-    <label for="body" style="font-size:150%; margin-top: 10px;">내용:</label>
+    <label for="body" style="font-size:150%; margin-top: 10px; font-family: 'S-CoreDream-5Medium';">내용:</label>
         <textarea class="form-control" rows="10" name="body" 
             id="body"> {{ review.body }}
         </textarea>
@@ -36,19 +53,24 @@
     <br>
     {% if review.file %}
         <img src='{{ review.file.url }}' width='20%'>
+        <br>
+        <br>
+        <div style="float: left;">
+            <form action="{% url 'reviews:download' id=id %}">
+                <button class="btn btn-success" style="margin-left:20px; padding:10px 50px;">다운로드</button>
+            </form>
+        </div>
     {% endif %}
-    <br>
-    <br>
-    {% if is_logined %}
 
+    {% if is_logined %}
         <div style="float: right;">
             <form action="{% url 'reviews:update' id=id %}">
-                <button class="btn btn-success" style="margin-left:20px; padding:10px 50px;">수정</button>
+                <button class="btn btn-success" style="margin-left:20px; padding:10px 50px; font-family: 'S-CoreDream-4Regular';">수정</button>
             </form>
         </div>
         <div style="float: right;">
             <form action="{% url 'reviews:delete' id=id %}">
-                <button class="btn btn-success" style="padding:10px 50px;">삭제</button>
+                <button class="btn btn-success" style="padding:10px 50px; font-family: 'S-CoreDream-4Regular';">삭제</button>
             </form>
         </div>
 

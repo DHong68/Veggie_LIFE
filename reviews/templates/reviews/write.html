@@ -1,9 +1,14 @@
-{% extends "user/base.html" %}
-{% load static %}
+{% extends "user/base2.html" %}
 {% block content %}
 
+<style>
+    #container1 {
+        font-family: 'S-CoreDream-4Regular';
+    }
+</style>
+
 <div class="jumbotron">
-    <div class="container" style="background-color:#98C138; color:white; border-radius:10px; padding-bottom:60px; margin-top:30px;">
+    <div class="container" id="container1" style="background-color:#ABE0A1; color:white; border-radius:10px; padding-bottom:60px; margin-top:30px;">
         <form method="post" action="{% url 'reviews:write' %}" enctype="multipart/form-data">
             
             {% csrf_token %}
@@ -48,9 +53,12 @@
                 <input type = "file" name = "file">
             </div>
 
+            <div style="float: right;">
+            <button type="button" class="btn btn-success" style="padding:10px 50px; margin-left:20px;"
+                onclick="document.location.href='{% url 'reviews:list' %}'">취소</button>
+            </div>
             <div style="float:right;">
-            <input type="submit" value="등록" class='btn btn-success' style="padding:10px 50px;">
-            <input type="reset" value="취소" class='btn btn-success' style="padding:10px 50px;">
+                <input type="submit" value="등록" class='btn btn-success' style="padding:10px 50px;">
             </div>
         </form>
     </div>

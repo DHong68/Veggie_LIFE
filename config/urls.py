@@ -9,7 +9,7 @@ urlpatterns = [
     path('',userviews.home),
     path('reviews/', include('reviews.urls')),  
     path('store/', include('store.urls')),
-    path('user/', include('user.urls')),
+    path('', include('user.urls')),
     
   
    

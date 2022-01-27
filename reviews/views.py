@@ -7,11 +7,17 @@ from django.core.paginator import Paginator
 from reviews.models import Review
 from user.models import User
 from django.db.models import Q
+from user.views import if_session
 
 def write(request):
+    context = {}
+    if if_session(request):
+        context['user_session_id'], context['user_session_veg_type'] = if_session(request)
+        print(context['user_session_id'], context['user_session_veg_type'])
+
     if request.method == 'POST':
         if not request.session.get('user_id'):
-            return render(request, 'reviews/write_fail.html')
+            return render(request, 'reviews/write_fail.html', context)
 
         form = ReviewForm(request.POST, request.FILES)
         user_id = request.session['user_id']
@@ -22,28 +28,37 @@ def write(request):
             review.date = timezone.now()
 
             review.save()
-            return render(request, 'reviews/write_success.html')
+            return render(request, 'reviews/write_success.html', context)
     
     else:
         form = ReviewForm()
-
-    return render(request, 'reviews/write.html', { 'form':form })
+    context['form'] = form
+    return render(request, 'reviews/write.html', context)
 
 
 def delete(request, id):
+    context = {}
+    if if_session(request):
+        context['user_session_id'], context['user_session_veg_type'] = if_session(request)
+        print(context['user_session_id'], context['user_session_veg_type'])
     try:
         review = Review.objects.get(id=id)
         review.delete()
 
-        return render(request, 'reviews/delete_success.html')
+        return render(request, 'reviews/delete_success.html', context)
     
     except:
-        return render(request, 'reviews/delete_fail.html')
+        return render(request, 'reviews/delete_fail.html', context)
 
+# 세션 추가
 def update(request, id):
+    context={}
     review = Review.objects.get(id=id)
-
+    
     if request.method == 'POST':
+        if not request.session.get('user_id'):
+            return render(request, 'reviews/update_fail.html')
+
         form = ReviewForm(request.POST, request.FILES)
         user_id = request.session['user_id']
 
@@ -61,9 +76,8 @@ def update(request, id):
     else:
         form = ReviewForm()
     
-    context = { 
-        'review' : review 
-    }
+    context['form'] = form
+    context['review'] = review
     return render(request, 'reviews/update.html', context)
 
 
@@ -117,6 +131,11 @@ def list(request):
     'title' : title,
     'store_name' : store_name,
     }
+    
+    if if_session(request):
+        context['user_session_id'], context['user_session_veg_type'] = if_session(request)
+        print(context['user_session_id'], context['user_session_veg_type'])
+
     return render(
         request, 'reviews/list.html', context)
 
@@ -124,7 +143,7 @@ def list(request):
 
 
 def details(request):
-    id = request.GET.get('id')
+    id = int(request.GET.get('id'))
     review = Review.objects.get(id=id)
 
     is_logined = False
@@ -137,6 +156,29 @@ def details(request):
         'review' : review,
         'is_logined' : is_logined
     }
+
+    if if_session(request):
+        context['user_session_id'], context['user_session_veg_type'] = if_session(request)
+        print(context['user_session_id'], context['user_session_veg_type'])
     return render(request, 'reviews/details.html', context)
+
+
+from config import settings
+import os
+
+
+def download(request, id):
+    #id = request.GET.get('id')
+    review = Review.objects.get(id=id)
+    
+    filepath = str(settings.BASE_DIR) + ('/media/%s' % review.file.name)
+    filename = os.path.basename(filepath)
+
+    with open(filepath, 'rb') as f:
+        response = HttpResponse(f, content_type='application/octet-stream')
+        response['Content-Disposition'] = 'attachment; filename=%s' % filename
+        
+        return response
+
 
 

@@ -1,16 +1,51 @@
-{% extends "user/base.html"%}
+{% extends "user/base2.html"%}
+{% load static %}
+<link href="{% static 'user/css/styles2.css'%}" rel="stylesheet" />
 
 {% block content %}
-<div style="position : relative;display: flex;justify-content:center;align-items: center;text-align: center; margin:70px 0 0 0">
-<div class="login-page" style="display: flex;justify-content: center;align-items: center; opacity:0.7; border: 3px solid #FFFFFF;border-radius: 7px;padding:15px; box-shadow:3px gray">
-    {% comment %} {{ form.instance }} {% endcomment %}
-    <div class="form" style="text-align: center;">
-        <strong style="font-size:30px;color:white">UPDATE INFORMATION</strong>
-        
-        <hr style="background-color:#FFFFFF; border: 0; height: 3px;">
+<style>
+input[type=text] { 
+    width:25;
+    height:15;
+    font-size:25px;
+    margin: 8px;
+    padding:3px;
+    border: 2px solid #c5e0b4;
+    border-radius: 7px;
+  }
+input[type=password]{ 
+    width:25;
+    height:15;
+    font-size:25px;
+    margin: 8px;
+    padding:3px;
+    border: 2px solid #c5e0b4;
+    border-radius: 7px;
+}
+input[type=submit]{
+    width:100;
+    height:15;
+    color : #c5e0b4;
+    font-size:25px;
+    background-color: #FFFFFF
+    ;border: 2px solid #c5e0b4;
+    border-radius: 7px;
+    margin: 8px 0;
+    padding:3px;
+    border: 2px solid #FFFFFF;
+    border-radius: 7px;"
+}
+}
+</style>
+<div class="login-box" style="position : relative;display: flex;justify-content:center;align-items: center;text-align: center; margin:70px 0 0 0">
+<div class="login-page" style="display: flex;background-color:#FFFFFF;justify-content: center;align-items: center; opacity:0.7; border: 3px solid #FFFFFF;border-radius: 7px;padding:15px; box-shadow:3px gray">
 
-        {% comment %} <form action="{% url 'user:update' user_id=user.user_id %}" method="post"> {% endcomment %}
-        {% comment %} <form action="{% url 'user:update' user.user_id %}" method="post"> {% endcomment %}
+    <div class="form" style="text-align: center;font-family: 'S-CoreDream-3Light';">
+
+        <strong style="font-size:30px;color:#c5e0b4">UPDATE INFORMATION🌱</strong>
+        
+        <hr id='line' style="background-color:#c5e0b4; border: 0; height: 3px;">
+
         <form action="{{ user.user_id }}" method="post" instance = "{{ user }}">
             
             {% csrf_token %}
@@ -26,35 +61,35 @@
                 <div class="alert alert-danger" role="alert">
                 {% for field in form %}
                     {% if field.errors %}
-                        <strong>{{ field.label }}를 확인하세요.</strong>
+                        <strong>중복되는 {{ field.label }}입니다.</strong>
                     {% endif %}
                 {% endfor %}
                 </div>
             {% endif %}
             <tr>
                 <td>
-                    <input type="text" value="{{ form.instance.user_id }}" name="user_id" placeholder="ID"  required size="15" maxlength="30" id="user_id" style="width:25;height:15;font-size:25px;margin: 8px;border: 2px solid #FFFFFF;border-radius: 7px;">
-                    <input type="text" value="{{ form.instance.name }}" name="name" placeholder="Name"  required size="15" maxlength="50" id="name" style="width:25;height:15;font-size:25px;margin: 8px;border: 2px solid #FFFFFF;border-radius: 7px;">
+                    <input type="text" value="{{ form.instance.user_id }}" name="user_id" placeholder="ID"  required size="18" maxlength="30" id="user_id" >
+                    <input type="text" value="{{ form.instance.name }}" name="name" placeholder="Name"  required size="18" maxlength="50" id="name" >
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="password" name="password" placeholder="Password"  required size="15" maxlength="50" id="password" style="width:25;height:15;font-size:25px;margin: 8px;border: 2px solid #FFFFFF;border-radius: 7px;">
-                    <input type="password" name="re_password" placeholder="Confirm Password"  required size="15" maxlength="50" id="re_password" style="width:25;height:15;font-size:25px;margin: 8px;border: 2px solid #FFFFFF;border-radius: 7px;">
+                    <input type="password" name="password" placeholder="Password"  required size="18" maxlength="50" id="password">
+                    <input type="password" name="re_password" placeholder="Confirm Password"  required size="18" maxlength="50" id="re_password">
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="text" value="{{ form.instance.email }}" name="email" placeholder="Email"  required size="33.7" maxlength="50" id="email" style="width:25;height:15;font-size:25px;margin: 8px;border: 2px solid #FFFFFF;border-radius: 7px;">
+                    <input type="text" value="{{ form.instance.email }}" name="email" placeholder="Email"  required size="40" maxlength="50" id="email">
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="text" value="{{ form.instance.veg_type }}" name="veg_type" placeholder="Vegan Type"  required size="20" maxlength="30" id="veg_type" style="width:25;height:15;font-size:25px;margin: 8px 0;border: 2px solid #FFFFFF;border-radius: 7px;">
+                    <input type="text" value="{{ form.instance.veg_type }}" name="veg_type" placeholder="Vegan Type : 비건 락토 락토오보 페스코"  required size="40" maxlength="30" id="veg_type">
                 </td>
             </tr>
             </table>
-            <input type="submit" value="UPDATE" style="width:100; height:15; color : white; font-size:25px;background-color: #c5e0b4;border: 2px solid #FFFFFF;border-radius: 7px;margin: 8px 0;border: 2px solid #FFFFFF;border-radius: 7px;">
+            <input type="submit" value="Sign UP" style="width:100; height:15; color : #c5e0b4; font-size:25px;background-color: #FFFFFF;border: 2px solid #c5e0b4;border-radius: 7px;margin: 8px 0;padding:3px;border: 2px solid #FFFFFF;border-radius: 7px;">
             </form>
 
     </div>

@@ -4,16 +4,19 @@ from .models import User
 from reviews.models import Review
 from .forms import SignupForm
 
-def home(request):
+def if_session(request):
      user_id = request.session.get('user_id')
      if user_id:
           user = User.objects.get(user_id = user_id)
+          return user.user_id, user.veg_type
+
+def home(request):
+     if if_session(request):
           context = {}
-          context['user'] = user
+          context['user_session_id'], context['user_session_veg_type'] = if_session(request)
           return render(request, 'user/home.html', context)
      else:
           return render(request, 'user/home.html')
-     
           
 def signup(request):
      if request.method == 'POST':
@@ -26,7 +29,7 @@ def signup(request):
                     context['error'] = '비밀번호가 일치하지 않습니다.' 
                     return render(request, "user/signup.html", context)
                signupform.save()
-               return redirect('/user/login')
+               return redirect('/login')
      else:
           form = SignupForm()
      return render(request, 'user/signup.html', {'form': form})
@@ -72,23 +75,29 @@ def mypage(request):
      context['posts'] = posts
      if user:
           context['user'] = user
+          context['user_session_id'], context['user_session_veg_type'] = if_session(request)
           return render(request, 'user/mypage.html', context)
      else:
           return redirect('/')
 
 def update(request, user_id):
      user = get_object_or_404(User, user_id = user_id)
+     context = {}
+     if if_session(request):
+          context['user_session_id'], context['user_session_veg_type'] = if_session(request)
      if request.method == 'POST':
           form = SignupForm(request.POST, instance=user)
           re_password = request.POST.get('re_password')
-          context = {}
           if form.is_valid():
                signupform = form.save(commit=False)
                if signupform.password != re_password:
                     context['error'] = '비밀번호가 일치하지 않습니다.' 
                     return render(request, "user/update.html", context)
                signupform.save()
-               return redirect('/user/login')
+               logout(request)
+               return redirect('/login')
      else:
           form = SignupForm(instance=user)
-     return render(request, 'user/update.html', {'form': form, 'user': user})
+     context['form'] = form
+     context['user'] = user
+     return render(request, 'user/update.html', context)
