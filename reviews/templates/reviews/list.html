@@ -121,13 +121,13 @@
   </body>
 </form>
 </div>
-{% if 'user_id' in request.session %}
-  <div id="list" style='text-align:center;'>
-    <form action="{% url 'reviews:write' %}" >
-      <button>글쓰기</button>
-    </form>
-  </div>
-{% endif %}
+
+<div id="list" style='text-align:center;'>
+  <form action="{% url 'reviews:write' %}" >
+    <button>글쓰기</button>
+  </form>
+</div>
+
 
 <script> 
   function getID(id) {
